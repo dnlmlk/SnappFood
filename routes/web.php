@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('main');
 });
 
+Route::resource('RestaurantCategories', \App\Http\Controllers\RestaurantCategoriesController::class)->middleware(['admin', 'auth']);
+Route::get('/sendDelete/{id}', [\App\Http\Controllers\RestaurantCategoriesController::class, 'sendDeleteParam'])->whereNumber('id')->name('RestaurantCategories.sendDeleteParam')->middleware(['admin', 'auth']);
+
 Route::get('/dashboardd', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

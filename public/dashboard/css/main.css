@@ -517,7 +517,7 @@ input[type="date" i] {
 -----------------------------------------------------------
 */
 .logo {
-  height: 50px;
+  height: 90px;
 }
 
 .logo > a{
@@ -599,9 +599,19 @@ input[type="date" i] {
   color: #222222;
 }
 
+.header-fixed .main_menu > li > form > button {
+    color: #222222;
+}
+
 .main_menu > li:hover > a {
   color: #ec1d25;
   text-decoration: none;
+}
+
+
+.main_menu > li:hover > form > button {
+    color: #ec1d25;
+    text-decoration: none;
 }
 
 /* ------------------------------------ */
@@ -1434,7 +1444,7 @@ body {padding-right: 0px !important;}
 */
 .bg-title-page {
   width: 100%;
-  min-height: 545px;
+  min-height: 615px;
   padding-left: 15px;
   padding-right: 15px;
   background-repeat: no-repeat;
