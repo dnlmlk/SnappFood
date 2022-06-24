@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FoodCategories;
+use App\Models\RestaurantCategories;
 use Illuminate\Http\Request;
 
 class FoodCategoriesController extends Controller
@@ -13,7 +15,8 @@ class FoodCategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = FoodCategories::all();
+        return view('FoodCategories',['categories' => $categories]);
     }
 
     /**
@@ -34,7 +37,10 @@ class FoodCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        FoodCategories::insert([
+            'name' => $request->input('name')
+        ]);
+        return $this->index();
     }
 
     /**
@@ -56,7 +62,7 @@ class FoodCategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('editFoodCategory', ['id' => $id, 'name' => FoodCategories::find($id)->name]);
     }
 
     /**
@@ -68,7 +74,10 @@ class FoodCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = FoodCategories::find($id);
+        $category->name = $request->input('editedName');
+        $category->save();
+        return $this->index();
     }
 
     /**
@@ -79,6 +88,11 @@ class FoodCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        FoodCategories::destroy($id);
+        return $this->index();
+    }
+
+    public function sendDeleteParam($id){
+        return $this->destroy($id);
     }
 }
