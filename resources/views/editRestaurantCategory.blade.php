@@ -80,7 +80,7 @@
 								</span>
 
                                 <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                    <input class="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="editedName" value="{{ $name }}">
+                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="editedName" value="{{ $name }}">
                                 </div>
 
 

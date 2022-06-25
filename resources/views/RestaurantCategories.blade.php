@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Food categories</a>
+                    <a href="{{ route('FoodCategories.index') }}" class="txt19">Food categories</a>
                 </li>
 
                 <li class="t-center m-b-13">
@@ -72,7 +72,7 @@
                 </span>
 
                 <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                    <input class="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="name">
+                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name">
                 </div>
 
 

@@ -517,7 +517,7 @@ input[type="date" i] {
 -----------------------------------------------------------
 */
 .logo {
-  height: 90px;
+  height: 80px;
 }
 
 .logo > a{
@@ -581,18 +581,13 @@ input[type="date" i] {
   padding: 15px;
 }
 
-.m-m-b{
+.main_menu > li > form > button {
     font-family: Montserrat;
     font-weight: 400;
     font-size: 14px;
     text-transform: uppercase;
     color: white;
     padding: 15px;
-}
-
-.m-m-b:hover{
-    color: #ec1d25;
-    text-decoration: none;
 }
 
 .header-fixed .main_menu > li > a {
@@ -608,12 +603,10 @@ input[type="date" i] {
   text-decoration: none;
 }
 
-
 .main_menu > li:hover > form > button {
     color: #ec1d25;
     text-decoration: none;
 }
-
 /* ------------------------------------ */
 .sub_menu {
   position: absolute;
@@ -692,6 +685,10 @@ input[type="date" i] {
 
 .social a:hover {
   color: #ec1d25;
+}
+
+.social > form > button:hover {
+    color: #ec1d25;
 }
 
 .btn-show-sidebar {

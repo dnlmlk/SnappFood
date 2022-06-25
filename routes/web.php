@@ -23,7 +23,16 @@ Route::get('/sendDelete/{id}', [\App\Http\Controllers\RestaurantCategoriesContro
 Route::resource('FoodCategories', \App\Http\Controllers\FoodCategoriesController::class)->middleware(['auth', 'admin']);
 Route::get('/sendDeleted/{id}', [\App\Http\Controllers\FoodCategoriesController::class, 'sendDeleteParam'])->whereNumber('id')->name('FoodCategories.sendDeleteParam')->middleware(['admin', 'auth']);
 
+Route::resource('Restaurant', \App\Http\Controllers\RestaurantProfileController::class)->middleware(['auth', 'seller']);
+
 Route::get('/dashboardd', function () {
+
+    if (auth()->user()->role == 'seller') {
+        $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+        $gate = \Illuminate\Support\Facades\Gate::allows('view', $restaurant);
+        if($gate == false)  return redirect()->route('Restaurant.index');
+    }
+
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 

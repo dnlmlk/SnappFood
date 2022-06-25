@@ -55,11 +55,12 @@
 @endsection
 
 @section('content')
-    <!-- Title Page -->
+
     <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('dashboard/img/bg-title-page-03.jpg') }});">
         <h2 class="txt1 t-center">
             Dashboard
         </h2>
     </section>
+
 @endsection
 
