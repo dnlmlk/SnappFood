@@ -27,6 +27,7 @@ Route::resource('Restaurant', \App\Http\Controllers\RestaurantProfileController:
 
 Route::resource('ManageFood', \App\Http\Controllers\FoodController::class)->middleware(['auth', 'seller']);
 Route::get('/ManageFood/jQuery/ajax', [\App\Http\Controllers\FoodController::class, 'ajax'])->middleware(['auth', 'seller'])->name('ManageFood.ajax');
+Route::get('/ManageFood/jQuery/ajaxSearch', [\App\Http\Controllers\FoodController::class, 'ajaxSearch'])->middleware(['auth', 'seller'])->name('ManageFood.ajaxSearch');
 
 Route::get('/dashboardd', function () {
 

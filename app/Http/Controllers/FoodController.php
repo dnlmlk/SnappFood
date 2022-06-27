@@ -23,7 +23,9 @@ class FoodController extends Controller
             $categories[$objCategory->id] = $objCategory->name;
         }
         $categories = array_unique($categories);
-        $max = max(array_keys($categories));
+        if (count($categories) > 0)
+            $max = max(array_keys($categories));
+        else $max = 0;
 
         $food = Food::all();
 
@@ -144,5 +146,12 @@ class FoodController extends Controller
         $foods = DB::table('food')->where('food_categories_id', $categoryId)->get();
         if ($categoryId == '0') $foods = Food::all();
         return view('forAjax', ['foods' => $foods]);
+    }
+
+    public function ajaxSearch(Request $request){
+//        return $request->input('search');
+        $foods = DB::table('food')->where('name', 'REGEXP', $request->input('search'))->get();
+        return view('forAjax', ['foods' => $foods]);
+
     }
 }

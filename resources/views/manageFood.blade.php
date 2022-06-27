@@ -85,6 +85,8 @@
             @endforeach
         </ul>
 
+        <input type="text" id="search" class="form-control" placeholder="Search your food here">
+
         <div class="filters-content">
             <div class="row grid" id="foodBox">
                 @foreach($foods as $food)
