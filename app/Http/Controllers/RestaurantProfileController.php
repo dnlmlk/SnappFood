@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
 use App\Models\RestaurantCategories;
+use App\Rules\iranianPhoneRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isNull;
 
 class RestaurantProfileController extends Controller
 {
@@ -39,8 +41,18 @@ class RestaurantProfileController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'phone_number' => ['nullable', 'bail', new iranianPhoneRule],
+            'account_number' => 'nullable|bail|integer',
+        ]);
+
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
-        $restaurant->update($request->all());
+        $myRequest = $request->all();
+        if (is_null($request->input('address')) && $restaurant->address != null) $myRequest['address'] = $restaurant->address;
+
+
+        $restaurant->update($myRequest);
         return redirect()->route('dashboard');
     }
 

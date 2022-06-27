@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->string('name')->nullable();
-            $table->foreignIdFor(\App\Models\RestaurantCategories::class)->nullable();
+            $table->foreignIdFor(\App\Models\RestaurantCategories::class)->nullable()->constrained();
             $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
             $table->integer('account_number')->nullable();

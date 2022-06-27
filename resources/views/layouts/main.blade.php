@@ -33,6 +33,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css/main.css') }}">
     <!--===============================================================================================-->
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+    <style type="text/css">
+        #map {
+            width: 100%;
+            height: 480px;
+        }
+    </style>
 
 
 </head>

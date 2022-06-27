@@ -65,14 +65,6 @@
                                     <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" value="{{ $restaurant->phone_number ?? ""}}" name="phone_number">
                                 </div>
 
-                                <!-- Phone -->
-                                <span class="txt9">
-									Address
-								</span>
-
-                                <div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" value="{{ $restaurant->address ?? ""}}" name="address">
-                                </div>
 
                                 <!-- Email -->
                                 <span class="txt9">
@@ -80,15 +72,62 @@
 								</span>
 
                                 <div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="number" value="{{ $restaurant->account_number ?? ""}}" name="account_number">
+                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" value="{{ $restaurant->account_number ?? ""}}" name="account_number">
                                 </div>
+
+                            </div>
+                            <div class="col-md-12">
+
+                                <div id="map"></div>
+                                <br>
+                                <button class="btn3 flex-c-m size13 txt11 trans-0-4" type="button" id="confirmPosition">Confirm Position</button>
+                                <br>
+                                <script>
+                                    // Get element references
+                                    var confirmBtn = document.getElementById('confirmPosition');
+                                    var onClickPositionView = document.getElementById('onClickPositionView');
+                                    var onIdlePositionView = document.getElementById('onIdlePositionView');
+
+                                    // Initialize locationPicker plugin
+                                    var lp = new locationPicker('map', {
+                                        setCurrentPosition: true, // You can omit this, defaults to true
+                                    }, {
+                                        zoom: 15 // You can set any google map options here, zoom defaults to 15
+                                    });
+
+                                    // Listen to button onclick event
+                                    confirmBtn.onclick = function () {
+                                        // Get current location and show it in HTML
+                                        var location = lp.getMarkerPosition();
+                                        document.getElementById('address').value = location.lat + ',' + location.lng;
+                                    };
+
+                                    // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+                                    google.maps.event.addListener(lp.map, 'idle', function (event) {
+                                        // Get current location and show it in HTML
+                                        var location = lp.getMarkerPosition();
+                                        onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+                                    });
+
+
+                                </script>
+                                <input type="hidden" id="address" name="address" value="">
+
+
                             </div>
                         </div>
+
+                        @if($errors->all())
+                            <div class="alert alert-danger" role="alert">
+                                {{ $errors->all()[0] }}
+                            </div>
+
+                        @endif
 
                         <div class="wrap-btn-booking flex-c-m m-t-6">
                             <!-- Button3 -->
                             <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
-                                Book Table
+                                Save
                             </button>
                         </div>
                     </form>

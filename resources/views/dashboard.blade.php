@@ -10,26 +10,31 @@
         <ul class="menu-sidebar p-t-95 p-b-70">
 
             @if(auth()->user()->role == 'admin')
-            <li class="t-center m-b-13">
-                <a href="{{ route('RestaurantCategories.index') }}" class="txt19">Restaurants categories</a>
-            </li>
 
-            <li class="t-center m-b-13">
-                <a href="{{ route('FoodCategories.index') }}" class="txt19">Food categories</a>
-            </li>
+                <li class="t-center m-b-13">
+                    <a href="{{ route('RestaurantCategories.index') }}" class="txt19">Restaurants categories</a>
+                </li>
 
-            <li class="t-center m-b-13">
-                <a href="#" class="txt19">Manage discounts</a>
-            </li>
+                <li class="t-center m-b-13">
+                    <a href="{{ route('FoodCategories.index') }}" class="txt19">Food categories</a>
+                </li>
 
-            <li class="t-center m-b-13">
-                <a href="#" class="txt19">Manage comments</a>
-            </li>
+                <li class="t-center m-b-13">
+                    <a href="#" class="txt19">Manage discounts</a>
+                </li>
 
-            <li class="t-center m-b-13">
-                <a href="#" class="txt19">Manage banners</a>
-            </li>
+                <li class="t-center m-b-13">
+                    <a href="#" class="txt19">Manage comments</a>
+                </li>
 
+                <li class="t-center m-b-13">
+                    <a href="#" class="txt19">Manage banners</a>
+                </li>
+
+            @elseif(auth()->user()->role == 'seller')
+                <li class="t-center m-b-13">
+                    <a href="{{ route('ManageFood.index') }}" class="text-19">Manage Food</a>
+                </li>
             @endif
 
             <li class="t-center m-b-33">
@@ -41,15 +46,15 @@
             </li>
 
 
-            @if(auth()->user()->role == 'customer')
+{{--            @if(auth()->user()->role == 'customer')--}}
 
-            <li class="t-center">
-                <!-- Button3 -->
-                <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-                    Reservation
-                </a>
-            </li>
-            @endif
+{{--            <li class="t-center">--}}
+{{--                <!-- Button3 -->--}}
+{{--                <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">--}}
+{{--                    Reservation--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            @endif--}}
         </ul>
     </aside>
 @endsection

@@ -3309,7 +3309,7 @@ tbody.collapse.show {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   -ms-flex-align: center;
-      align-items: center;
+      align-items: end;
 }
 
 .navbar-toggler {
