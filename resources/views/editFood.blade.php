@@ -90,16 +90,29 @@
                             <input type="number" name="price" value="{{ old('price') ?? $food->price}}" class="form-control" placeholder="Price" />
                         </div>
                         <div>
-                            <input type="text" name="material" value="{{ old('material') ?? $food->raw_material}}" class="form-control" placeholder="Raw Materials" />
+                            <input type="text" name="raw_material" value="{{ old('material') ?? $food->raw_material}}" class="form-control" placeholder="Raw Materials" />
                         </div>
                         <div>
-                            <select class="form-control nice-select wide" name="foodCategory">
+                            <select class="form-control nice-select wide" name="food_categories_id">
                                 <option value="" disabled selected>
                                     Food Category
                                 </option>
                                 @foreach($categories as $id => $category)
                                     <option value="{{ $id }}" @if($id == $food->food_categories_id) {{ 'selected' }} @endif>
                                     {{ $category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <select class="form-control nice-select wide" name="discount_id">
+                                <option value="" disabled selected>
+                                    Discount
+                                </option>
+                                @foreach($discounts as $id => $discount)
+
+                                    <option value="{{ $discount->id }}" @if($discount->id == $food->discount_id) {{ 'selected' }} @endif>
+                                    {{ $discount->value . "%" }}
                                     </option>
                                 @endforeach
                             </select>

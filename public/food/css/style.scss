@@ -533,6 +533,34 @@ a:focus {
       }
     }
 
+      .discount{
+          text-decoration: line-through;
+      }
+
+      .discountBox{
+          width: 70px;
+          height: 40px;
+          border-radius: 50%;
+          background: #a71d2a;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: -30px;
+      }
+
+      .category{
+          width: 400px;
+          height: 40px;
+          border-radius: 50%;
+          background: #1b1e21;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: -30px;
+      }
+
     .options {
       display: flex;
       justify-content: space-between;

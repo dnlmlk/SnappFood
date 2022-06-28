@@ -19,7 +19,7 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage discounts</a>
+                    <a href="{{ route('Discount.index') }}" class="txt19">Manage discounts</a>
                 </li>
 
                 <li class="t-center m-b-13">

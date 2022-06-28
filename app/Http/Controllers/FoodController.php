@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discount;
 use App\Models\Food;
 use App\Models\FoodCategories;
 use App\Models\Restaurant;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,19 +19,25 @@ class FoodController extends Controller
      */
     public function index()
     {
+
         $categories = [];
-        $ObjCategories = DB::table('food')->select('food_categories.id', 'food_categories.name')->join('food_categories', 'food.food_categories_id', '=', 'food_categories.id')->get();
-        foreach ($ObjCategories as $objCategory) {
-            $categories[$objCategory->id] = $objCategory->name;
+
+        $foods = Food::all();
+        foreach ($foods as $index => $food) {
+            $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+            if ($gate == false) unset($foods[$index]);
         }
-        $categories = array_unique($categories);
+
+        foreach ($foods as $food) {
+            $categories[$food->foodCategory->id] = $food->foodCategory->name;
+        }
+
         if (count($categories) > 0)
             $max = max(array_keys($categories));
         else $max = 0;
 
-        $food = Food::all();
 
-        return view('manageFood', ['foods' => $food, 'categories' => $categories, 'max' => $max]);
+        return view('manageFood', ['foods' => $foods, 'categories' => $categories, 'max' => $max]);
     }
 
     /**
@@ -40,7 +48,9 @@ class FoodController extends Controller
     public function create()
     {
         $categories = FoodCategories::pluck('name', 'id');
-        return view('addFood', ['categories' => $categories]);
+        $discounts = Discount::all();
+
+        return view('addFood', ['categories' => $categories, 'discounts' => $discounts]);
     }
 
     /**
@@ -68,6 +78,9 @@ class FoodController extends Controller
                 'food_categories_id' => $request->input('foodCategory'),
                 'raw_material' => $request->input('material'),
                 'image_path' => $fileName,
+                'restaurant_id' => Restaurant::where('user_id', auth()->user()->id)->first()->id,
+                'discount_id' => $request->input('discount')
+
             ]);
         }else{
             Food::insert([
@@ -75,6 +88,8 @@ class FoodController extends Controller
                 'price' => $request->input('price'),
                 'food_categories_id' => $request->input('foodCategory'),
                 'raw_material' => $request->input('material'),
+                'restaurant_id' => Restaurant::where('user_id', auth()->user()->id)->first()->id,
+                'discount_id' => $request->input('discount')
             ]);
         }
         return redirect()->route('ManageFood.index');
@@ -89,9 +104,15 @@ class FoodController extends Controller
     public function show($id)
     {
         $food = Food::find($id);
-        $categories = FoodCategories::pluck('name', 'id');
 
-        return view('editFood', ['id' => $id, 'food' => $food, 'categories' => $categories]);
+        $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+        if ($gate == false) abort(403);
+
+        $categories = FoodCategories::pluck('name', 'id');
+        $discounts = Discount::all();
+
+
+        return view('editFood', ['id' => $id, 'food' => $food, 'categories' => $categories, 'discounts' => $discounts]);
     }
 
     /**
@@ -105,10 +126,13 @@ class FoodController extends Controller
     {
         $food = Food::find($id);
 
+        $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+        if ($gate == false) abort(403);
+
         $request->validate([
             'name' => 'required',
             'price' => 'required|integer',
-            'foodCategory' => 'required',
+            'food_categories_id' => 'required',
             'imagePath' => 'mimes:jpg,jpeg,png'
         ]);
 
@@ -118,12 +142,15 @@ class FoodController extends Controller
 
             $food->name = $request->input('name');
             $food->price = $request->input('price');
-            $food->food_categories_id = $request->input('foodCategory');
-            $food->raw_material = $request->input('material');
+            $food->food_categories_id = $request->input('food_categories_id');
+            $food->raw_material = $request->input('raw_material');
             $food->image_path = $fileName;
+            $food->discount_id = $request->input('discount_id');
+
 
             $food->save();
         }else{
+//            dd($request->all());
            $food->update($request->all());
         }
         return redirect()->route('ManageFood.index');
@@ -137,20 +164,40 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
+        $food = Food::find($id);
+        $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+        if ($gate == false) abort(403);
+
         Food::destroy($id);
         return redirect()->route('ManageFood.index');
     }
 
     public function ajax(Request $request){
         $categoryId = $request->input('category');
-        $foods = DB::table('food')->where('food_categories_id', $categoryId)->get();
+        $foods = Food::where('food_categories_id', $categoryId)->get();
+
+
         if ($categoryId == '0') $foods = Food::all();
+
+        foreach ($foods as $index => $food) {
+
+            $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+            if ($gate == false) unset($foods[$index]);
+        }
+
+
         return view('forAjax', ['foods' => $foods]);
     }
 
     public function ajaxSearch(Request $request){
-//        return $request->input('search');
-        $foods = DB::table('food')->where('name', 'REGEXP', $request->input('search'))->get();
+        $foods = Food::where('name', 'REGEXP', $request->input('search'))->get();
+
+        foreach ($foods as $index => $food) {
+
+            $gate = \Illuminate\Support\Facades\Gate::allows('view' , $food);
+            if ($gate == false) unset($foods[$index]);
+        }
+
         return view('forAjax', ['foods' => $foods]);
 
     }

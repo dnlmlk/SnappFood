@@ -14,11 +14,11 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Food categories</a>
+                    <a href="{{ route('FoodCategories.index') }}" class="txt19">Food categories</a>
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage discounts</a>
+                    <a href="{{ route('Discount.index') }}" class="txt19">Manage discounts</a>
                 </li>
 
                 <li class="t-center m-b-13">

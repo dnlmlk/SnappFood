@@ -23,6 +23,9 @@ Route::get('/sendDelete/{id}', [\App\Http\Controllers\RestaurantCategoriesContro
 Route::resource('FoodCategories', \App\Http\Controllers\FoodCategoriesController::class)->middleware(['auth', 'admin']);
 Route::get('/sendDeleted/{id}', [\App\Http\Controllers\FoodCategoriesController::class, 'sendDeleteParam'])->whereNumber('id')->name('FoodCategories.sendDeleteParam')->middleware(['admin', 'auth']);
 
+Route::resource('Discount', \App\Http\Controllers\DiscountController::class)->middleware(['auth', 'admin']);
+Route::get('/sendDeleted/{id}', [\App\Http\Controllers\DiscountController::class, 'sendDeleteParam'])->whereNumber('id')->name('Discount.sendDeleteParam')->middleware(['admin', 'auth']);
+
 Route::resource('Restaurant', \App\Http\Controllers\RestaurantProfileController::class)->middleware(['auth', 'seller']);
 
 Route::resource('ManageFood', \App\Http\Controllers\FoodController::class)->middleware(['auth', 'seller']);

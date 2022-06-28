@@ -20,7 +20,7 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage discounts</a>
+                    <a href="{{ route('Discount.index') }}" class="txt19">Manage discounts</a>
                 </li>
 
                 <li class="t-center m-b-13">
@@ -44,17 +44,6 @@
                     <button type="submit" class="txt19">Logout</button>
                 </form>
             </li>
-
-
-{{--            @if(auth()->user()->role == 'customer')--}}
-
-{{--            <li class="t-center">--}}
-{{--                <!-- Button3 -->--}}
-{{--                <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">--}}
-{{--                    Reservation--}}
-{{--                </a>--}}
-{{--            </li>--}}
-{{--            @endif--}}
         </ul>
     </aside>
 @endsection

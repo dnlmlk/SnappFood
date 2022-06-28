@@ -104,8 +104,20 @@
                             </select>
                         </div>
                         <div>
+                            <select class="form-control nice-select wide" name="discount">
+                                <option value="" disabled selected>
+                                    Discount
+                                </option>
+                                @foreach($discounts as $id => $discount)
+
+                                    <option value="{{ $discount->id }}" @selected(old('discount') == $discount->id)>
+                                    {{ $discount->value . "%" }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
                             <input type="file" name="imagePath" id="img" class="form-control w-50">
-{{--                            <img src="{{ asset('food/images/food.jpg') }}" class="img-fluid w-50" alt="Default image">--}}
                         </div>
 
                         @if($errors->all())

@@ -101,16 +101,40 @@
                                         {{ $food->name }}
                                     </h5>
                                     <p>
-                                        {{ DB::table('food_categories')->where('id', $food->food_categories_id)->get()[0]->name }}<br>
+                                        <span class="category">
+                                            {{ DB::table('food_categories')->where('id', $food->food_categories_id)->get()[0]->name }}<br>
+                                        </span>
                                         @isset($food->raw_material)
-                                            Materials : {{ $food->raw_material }}
+                                            <span class="material">
+                                                Materials : {{ $food->raw_material }}
+                                            </span>
                                         @endisset
                                     </p>
-                                    <div class="options">
-                                        <h6>
-                                            {{ $food->price }}$
-                                        </h6>
-                                    </div>
+
+                                    @if($food->discount_id)
+                                        <div class="options">
+
+                                            <h6 class="{{ 'discount' }}">
+                                                {{ $food->price }}$
+                                            </h6>
+
+                                            <span class="discountBox">
+                                                    {{ $food->discount->value . "% " . ' Sale' }}
+                                            </span>
+                                        </div>
+
+                                        <h5>
+                                            {{ $food->toArray()['discounted_price'] . '$'}}
+                                        </h5>
+
+                                    @else
+
+                                        <div class="options">
+                                            <h6>
+                                                {{ $food->price }}$
+                                            </h6>
+                                        </div>
+                                    @endif
                                     <div class="btn-box">
                                         <a href="{{ route('ManageFood.show', $food->id) }}">Edit</a>
                                     </div>

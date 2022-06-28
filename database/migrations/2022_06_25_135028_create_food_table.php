@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignIdFor(\App\Models\FoodCategories::class)->constrained();
+            $table->foreignIdFor(\App\Models\Restaurant::class)->constrained();
+            $table->foreignIdFor(\App\Models\Discount::class)->nullable()->constrained();
             $table->string('raw_material')->nullable();
             $table->integer('price');
             $table->string('image_path')->nullable()->default('food/images/food.jpg');

@@ -38,17 +38,6 @@
                     <button type="submit" class="txt19">Logout</button>
                 </form>
             </li>
-
-
-            @if(auth()->user()->role == 'customer')
-
-                <li class="t-center">
-                    <!-- Button3 -->
-                    <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-                        Reservation
-                    </a>
-                </li>
-            @endif
         </ul>
     </aside>
 @endsection
@@ -60,7 +49,7 @@
                 <div class="col-lg-6 p-b-30">
                     <div class="t-center">
 						<span class="tit2 t-center">
-							Food Categories
+							Manage Discounts
 						</span>
 
                         <h3 class="tit3 t-center m-b-35 m-t-2">
@@ -68,7 +57,7 @@
                         </h3>
                     </div>
 
-                    <form class="wrap-form-booking" method="post" action="{{ route('FoodCategories.update', $id) }}">
+                    <form class="wrap-form-booking" method="post" action="{{ route('Discount.update', $id) }}">
                         @method('put')
                         @csrf
 
@@ -76,11 +65,11 @@
                             <div class="col-md-12">
                                 <!-- Date -->
                                 <span class="txt9">
-									Category name
+									Discount value
 								</span>
 
                                 <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="editedName" value="{{ $name }}">
+                                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="number" name="editedValue" value="{{ $value }}">
                                 </div>
 
 
