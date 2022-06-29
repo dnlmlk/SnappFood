@@ -572,7 +572,7 @@ a:focus {
 }
 
 .category{
-    width: 60px;
+    width: auto;
     height: 30px;
     border-radius: 10px;
     background: #9fcdff;

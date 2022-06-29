@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->string('name')->nullable();
-            $table->foreignIdFor(\App\Models\RestaurantCategories::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\RestaurantCategories::class)->nullable()->constrained()->nullOnDelete();
             $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
             $table->integer('account_number')->nullable();
