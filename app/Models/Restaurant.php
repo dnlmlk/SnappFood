@@ -9,17 +9,21 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'restaurant_categories_id', 'phone_number', 'address', 'account_number'];
+    protected $fillable = ['name', 'restaurant_categories_id', 'phone_number', 'address', 'account_number', 'status'];
 
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function restaurantCategory(){
-        return $this->belongsTo(RestaurantCategories::class);
+        return $this->belongsTo(RestaurantCategories::class, 'restaurant_categories_id', 'id');
     }
 
     public function foods(){
         return $this->hasMany(Food::class);
+    }
+
+    public function schedule(){
+        return $this->hasOne(Schedule::class);
     }
 }

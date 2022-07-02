@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
+use App\Models\Schedule;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -45,7 +46,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
+            'role' => $request->input('role'),
             'password' => Hash::make($request->password),
         ]);
 
@@ -53,6 +54,10 @@ class RegisteredUserController extends Controller
 
             Restaurant::insert([
                 'user_id' => $user->id,
+            ]);
+
+            Schedule::insert([
+               'restaurant_id' => Restaurant::where('user_id', $user->id)->first()->id,
             ]);
         }
 

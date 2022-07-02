@@ -10,6 +10,6 @@ class RestaurantCategories extends Model
     use HasFactory;
 
     public function restaurants(){
-        return $this->hasMany(Restaurant::class);
+        return $this->hasMany(Restaurant::class, 'restaurant_categories_id', 'id');
     }
 }

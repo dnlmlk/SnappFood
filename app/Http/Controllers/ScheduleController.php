@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurant;
-use App\Models\RestaurantCategories;
-use App\Rules\iranianPhoneRule;
+use App\Http\Requests\updateScheduleRequest;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\isNull;
 
-class RestaurantProfileController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +16,8 @@ class RestaurantProfileController extends Controller
     public function index()
     {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
-        $categories = RestaurantCategories::pluck('name', 'id');
-        return view('sellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
+        $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
+        return view('schedule', ['schedule' => $schedule]);
     }
 
     /**
@@ -39,21 +36,22 @@ class RestaurantProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(updateScheduleRequest $request)
     {
-
-        $request->validate([
-            'phone_number' => ['nullable', 'bail', new iranianPhoneRule],
-            'account_number' => 'nullable|bail|integer',
-        ]);
+        $validated = $request->validated();
 
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
-        $myRequest = $request->all();
-        if (is_null($request->input('address')) && $restaurant->address != null) $myRequest['address'] = $restaurant->address;
+        $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
 
-        $restaurant->update($myRequest);
+        $validated['saturday'] = $validated['saturday1'] . ',' . $validated['saturday2'];
+        $validated['sunday'] = $validated['sunday1'] . ',' . $validated['sunday2'];
+        $validated['monday'] = $validated['monday1'] . ',' . $validated['monday2'];
+        $validated['tuesday'] = $validated['tuesday1'] . ',' . $validated['tuesday2'];
+        $validated['wednesday'] = $validated['wednesday1'] . ',' . $validated['wednesday2'];
+        $validated['thursday'] = $validated['thursday1'] . ',' . $validated['thursday2'];
+        $validated['friday'] = $validated['friday1'] . ',' . $validated['friday2'];
 
-
+        $schedule->update($validated);
         return redirect()->route('dashboard');
     }
 
@@ -88,9 +86,7 @@ class RestaurantProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $restaurant = \App\Models\Restaurant::find($id)->first();
-        $request->input('status') == 'open' ? $restaurant->update(['status' => 'close']) : $restaurant->update(['status' => 'open']);
-        return redirect()->route('dashboard');
+        //
     }
 
     /**

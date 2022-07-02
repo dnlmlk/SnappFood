@@ -21,5 +21,11 @@ Route::middleware('auth:sanctum')->group(function ()
 {
     Route::resource('Addresses', \App\Http\Controllers\API\AddressController::class);
     Route::post('Addresses/{Address}', [\App\Http\Controllers\API\AddressController::class, 'setActiveAddress'])->name('Address.setActiveAddress');
+
     Route::get('Logout', [\App\Http\Controllers\API\AuthenticationController::class, 'logOut'])->name('API.Auth.logout');
+
+    Route::apiResource('apiRestaurant', \App\Http\Controllers\API\RestaurantController::class);
+
+    Route::apiResource('apiFood', \App\Http\Controllers\API\FoodController::class);
+    Route::get('apiRestaurant/{id}/foods', [\App\Http\Controllers\API\RestaurantController::class, 'food']);
 });

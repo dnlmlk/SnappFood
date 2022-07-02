@@ -32,9 +32,28 @@
                 </li>
 
             @elseif(auth()->user()->role == 'seller')
-                <li class="t-center m-b-13">
+                @php($restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first())
+
+                <li class="t-center">
+                    <form method="post" action="{{ route('Restaurant.update', $restaurant->id) }}">
+                        @csrf
+                        @method('put')
+
+                        <button type="submit" name="status" value="{{ $restaurant->status }}" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+                            @if($restaurant->status == 'open') Close it @else Open it @endif
+                        </button>
+                    </form>
+
+                </li>
+
+                <li class="t-center m-t-10 m-b-13">
                     <a href="{{ route('ManageFood.index') }}" class="text-19">Manage Food</a>
                 </li>
+
+                <li class="t-center m-t-10 m-b-13">
+                    <a href="{{ route('ManageFood.index') }}" class="text-19">Set restaurant schedule</a>
+                </li>
+
             @endif
 
             <li class="t-center m-b-33">

@@ -28,6 +28,8 @@ Route::get('/sendDeleted/{id}', [\App\Http\Controllers\DiscountController::class
 
 Route::resource('Restaurant', \App\Http\Controllers\RestaurantProfileController::class)->middleware(['auth', 'seller']);
 
+Route::resource('Schedule', \App\Http\Controllers\ScheduleController::class)->middleware(['auth', 'seller']);
+
 Route::resource('ManageFood', \App\Http\Controllers\FoodController::class)->middleware(['auth', 'seller']);
 Route::get('/ManageFood/jQuery/ajax', [\App\Http\Controllers\FoodController::class, 'ajax'])->middleware(['auth', 'seller'])->name('ManageFood.ajax');
 Route::get('/ManageFood/jQuery/ajaxSearch', [\App\Http\Controllers\FoodController::class, 'ajaxSearch'])->middleware(['auth', 'seller'])->name('ManageFood.ajaxSearch');
@@ -38,6 +40,9 @@ Route::get('/dashboardd', function () {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $gate = \Illuminate\Support\Facades\Gate::allows('view', $restaurant);
         if($gate == false)  return redirect()->route('Restaurant.index');
+
+        $schedule = \App\Models\Schedule::where('restaurant_id', $restaurant->id)->first();
+        if (\Illuminate\Support\Facades\Gate::allows('view', $schedule) == false) return redirect()->route('Schedule.index');
     }
 
     return view('dashboard');
