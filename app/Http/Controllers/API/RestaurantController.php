@@ -36,6 +36,6 @@ class RestaurantController extends Controller
     }
 
     public function food($id){
-        return new RestaurantFoodsResource(Restaurant::find(2));
+        return new RestaurantFoodsResource(Restaurant::find($id));
     }
 }

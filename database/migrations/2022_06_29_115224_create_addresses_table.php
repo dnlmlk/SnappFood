@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->constrained();
-            $table->string('title');
-            $table->text('address');
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->morphs('addressable');
+            $table->string('title')->nullable();
+            $table->text('address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->enum('active', ['0', '1'])->default('0');
             $table->timestamps();
         });

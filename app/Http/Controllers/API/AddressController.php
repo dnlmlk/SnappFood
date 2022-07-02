@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AddressResource;
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use function Sodium\add;
@@ -17,7 +19,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return response(Address::where('user_id', auth()->user()->id)->get());
+        return response(AddressResource::collection(User::find(auth()->user()->id)->addresses));
     }
 
     /**
@@ -35,15 +37,14 @@ class AddressController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        $address = Address::create([
-            'user_id' => auth()->user()->id,
+        $address = User::find(auth()->user()->id)->addresses()->create([
             'title' => $fields['title'],
             'address' => $fields['address'],
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude'],
         ]);
 
-        return response(['Your address is submitted successfully', $address]);
+        return response(['Your address is submitted successfully', new AddressResource($address)]);
     }
 
 
@@ -67,7 +68,7 @@ class AddressController extends Controller
                 'longitude' => 'numeric',
             ]);
             $address->update($request->all());
-            return response(['Your address is updated successfully', $address]);
+            return response(['Your address is updated successfully', new AddressResource($address)]);
         }
 
         return response("You don't have access", 403);
@@ -85,13 +86,13 @@ class AddressController extends Controller
         $gate = Gate::allows('view', $address);
 
         if ($gate) {
-            $addresses = Address::where('user_id', auth()->user()->id)->get();
+            $addresses = User::find(auth()->user()->id)->addresses;
             foreach ($addresses as $address) {
                 if ($address->id == $id) $address->update(['active' => '1']);
                 else $address->update(['active' => '0']);
             }
 
-            return response(['Your main address is updated', $address]);
+            return response(['Your main address is updated', AddressResource::collection(User::find(auth()->user()->id)->addresses)]);
         }
 
         return response("You don't have access", 403);

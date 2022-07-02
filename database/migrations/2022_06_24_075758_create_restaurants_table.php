@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->foreignIdFor(\App\Models\RestaurantCategories::class)->nullable()->constrained()->nullOnDelete();
             $table->string('phone_number')->nullable();
-            $table->text('address')->nullable();
             $table->enum('status', ['open', 'close'])->default('close');
             $table->integer('account_number')->nullable();
             $table->timestamps();

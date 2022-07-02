@@ -27,7 +27,9 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+        $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
+        return view('editSchedule', ['schedule' => $schedule]);
     }
 
     /**
@@ -84,9 +86,23 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updateScheduleRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+        $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
+
+        $validated['saturday'] = $validated['saturday1'] . ',' . $validated['saturday2'];
+        $validated['sunday'] = $validated['sunday1'] . ',' . $validated['sunday2'];
+        $validated['monday'] = $validated['monday1'] . ',' . $validated['monday2'];
+        $validated['tuesday'] = $validated['tuesday1'] . ',' . $validated['tuesday2'];
+        $validated['wednesday'] = $validated['wednesday1'] . ',' . $validated['wednesday2'];
+        $validated['thursday'] = $validated['thursday1'] . ',' . $validated['thursday2'];
+        $validated['friday'] = $validated['friday1'] . ',' . $validated['friday2'];
+
+        $schedule->update($validated);
+        return redirect()->route('Schedule.create');
     }
 
     /**

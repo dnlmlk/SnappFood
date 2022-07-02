@@ -27,6 +27,7 @@ Route::resource('Discount', \App\Http\Controllers\DiscountController::class)->mi
 Route::get('/sendDeleted/{id}', [\App\Http\Controllers\DiscountController::class, 'sendDeleteParam'])->whereNumber('id')->name('Discount.sendDeleteParam')->middleware(['admin', 'auth']);
 
 Route::resource('Restaurant', \App\Http\Controllers\RestaurantProfileController::class)->middleware(['auth', 'seller']);
+Route::post('Restaurant/updateProfile', [\App\Http\Controllers\RestaurantProfileController::class, 'profileUpdate'])->middleware(['auth', 'seller'])->name('Restaurant.updateProfile');
 
 Route::resource('Schedule', \App\Http\Controllers\ScheduleController::class)->middleware(['auth', 'seller']);
 

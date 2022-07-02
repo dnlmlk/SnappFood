@@ -9,10 +9,10 @@ class Address extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'title', 'address', 'latitude', 'longitude', 'active'];
-    protected $hidden = ['user_id', 'created_at', 'updated_at', 'active', 'user'];
+    protected $fillable = ['title', 'address', 'latitude', 'longitude', 'active'];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+
+    public function addressable(){
+        return $this->morphTo();
     }
 }

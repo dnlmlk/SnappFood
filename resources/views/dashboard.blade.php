@@ -51,7 +51,11 @@
                 </li>
 
                 <li class="t-center m-t-10 m-b-13">
-                    <a href="{{ route('ManageFood.index') }}" class="text-19">Set restaurant schedule</a>
+                    <a href="{{ route('Restaurant.create') }}" class="text-19">Settings</a>
+                </li>
+
+                <li class="t-center m-t-10 m-b-13">
+                    <a href="{{ route('Schedule.create') }}" class="text-19">Set restaurant schedule</a>
                 </li>
 
             @endif

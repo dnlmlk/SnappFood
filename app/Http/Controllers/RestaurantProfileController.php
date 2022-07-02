@@ -30,7 +30,9 @@ class RestaurantProfileController extends Controller
      */
     public function create()
     {
-        //
+        $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+        $categories = RestaurantCategories::pluck('name', 'id');
+        return view('editSellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
     }
 
     /**
@@ -48,10 +50,20 @@ class RestaurantProfileController extends Controller
         ]);
 
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+
+        $addressRequest = [
+            'latitude' => $request->addresses == null ? $restaurant->address->latitude : explode(',', $request->addresses)[0],
+            'longitude' => $request->addresses == null ? $restaurant->address->longitude : explode(',', $request->addresses)[1],
+            'address' => $request->address,
+        ];
+
         $myRequest = $request->all();
-        if (is_null($request->input('address')) && $restaurant->address != null) $myRequest['address'] = $restaurant->address;
+        unset($myRequest['addresses'], $myRequest['address']);
+
 
         $restaurant->update($myRequest);
+
+        $restaurant->address()->update($addressRequest);
 
 
         return redirect()->route('dashboard');
@@ -88,7 +100,7 @@ class RestaurantProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $restaurant = \App\Models\Restaurant::find($id)->first();
+        $restaurant = \App\Models\Restaurant::find($id);
         $request->input('status') == 'open' ? $restaurant->update(['status' => 'close']) : $restaurant->update(['status' => 'open']);
         return redirect()->route('dashboard');
     }
@@ -102,5 +114,32 @@ class RestaurantProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function profileUpdate(Request $request){
+
+        $request->validate([
+            'phone_number' => ['nullable', 'bail', new iranianPhoneRule],
+            'account_number' => 'nullable|bail|integer',
+        ]);
+
+        $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
+
+        $addressRequest = [
+            'latitude' => $request->addresses == null ? $restaurant->address->latitude : explode(',', $request->addresses)[0],
+            'longitude' => $request->addresses == null ? $restaurant->address->longitude : explode(',', $request->addresses)[1],
+            'address' => $request->address,
+        ];
+
+        $myRequest = $request->all();
+        unset($myRequest['addresses'], $myRequest['address']);
+
+
+        $restaurant->update($myRequest);
+
+        $restaurant->address()->update($addressRequest);
+
+
+        return redirect()->route('Restaurant.create');
     }
 }

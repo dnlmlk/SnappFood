@@ -9,7 +9,7 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'restaurant_categories_id', 'phone_number', 'address', 'account_number', 'status'];
+    protected $fillable = ['name', 'restaurant_categories_id', 'phone_number', 'account_number', 'status'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -25,5 +25,9 @@ class Restaurant extends Model
 
     public function schedule(){
         return $this->hasOne(Schedule::class);
+    }
+
+    public function address(){
+        return $this->morphOne(Address::class, 'addressable');
     }
 }

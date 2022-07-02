@@ -30,7 +30,7 @@ class AddressPolicy
      */
     public function view(User $user, Address $address)
     {
-        if ($user->id == $address->user->id) return true;
+        if ($user->id == $address->addressable->id) return true;
         return false;
     }
 

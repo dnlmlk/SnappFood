@@ -59,6 +59,9 @@ class RegisteredUserController extends Controller
             Schedule::insert([
                'restaurant_id' => Restaurant::where('user_id', $user->id)->first()->id,
             ]);
+
+            User::find($user->id)->restaurant->address()->create();
+
         }
 
             event(new Registered($user));
