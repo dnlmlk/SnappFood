@@ -15,8 +15,8 @@ class AddressResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'Id' => $this->id,
-            'Title' => $this->title,
+            $this->mergeWhen($this->addressable_type == 'App\Models\User', ['Id' => $this->id]),
+            $this->mergeWhen($this->addressable_type == 'App\Models\User', ['Title' => $this->title]),
             'Address' => $this->address,
             'Latitude' => $this->latitude,
             'Longitude' => $this->longitude,

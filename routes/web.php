@@ -35,6 +35,11 @@ Route::resource('ManageFood', \App\Http\Controllers\FoodController::class)->midd
 Route::get('/ManageFood/jQuery/ajax', [\App\Http\Controllers\FoodController::class, 'ajax'])->middleware(['auth', 'seller'])->name('ManageFood.ajax');
 Route::get('/ManageFood/jQuery/ajaxSearch', [\App\Http\Controllers\FoodController::class, 'ajaxSearch'])->middleware(['auth', 'seller'])->name('ManageFood.ajaxSearch');
 
+Route::get('Order', [\App\Http\Controllers\OrderController::class, 'getOrder'])->middleware(['auth', 'seller'])->name('order.getOrder');
+Route::put('Order/update', [\App\Http\Controllers\OrderController::class, 'update'])->middleware(['auth', 'seller'])->name('order.update');
+Route::get('Order/History', [\App\Http\Controllers\OrderController::class, 'getOrders'])->middleware(['auth', 'seller'])->name('order.History');
+
+
 Route::get('/dashboardd', function () {
 
     if (auth()->user()->role == 'seller') {

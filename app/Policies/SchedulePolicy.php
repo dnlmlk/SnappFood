@@ -30,7 +30,7 @@ class SchedulePolicy
      */
     public function view(User $user, Schedule $schedule)
     {
-        if ($schedule->saturday == null || $schedule->sunday == null || $schedule->monday == null || $schedule->tuesday == null || $schedule->wednesday == null || $schedule->thursday == null || $schedule->friday == null ) return false;
+        if ($schedule->saturday == null && $schedule->sunday == null && $schedule->monday == null && $schedule->tuesday == null && $schedule->wednesday == null && $schedule->thursday == null && $schedule->friday == null ) return false;
         return true;
     }
 

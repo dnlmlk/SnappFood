@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Address;
+use App\Models\Restaurant;
 use App\Models\Schedule;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,10 +22,7 @@ class RestaurantResource extends JsonResource
             'name' => $this->name,
             'category' => $this->restaurantCategory->name,
             'phone' => $this->phone_number,
-            'address' =>[
-                'latitude' => explode(',', $this->address)[0],
-                'longitude' => explode(',', $this->address)[1],
-                ],
+            'address' => new AddressResource(Restaurant::find($this->id)->address),
             'status' => $this->status,
 
             'schedule' => new ScheduleResource(Schedule::where('id', $this->id)->first()),

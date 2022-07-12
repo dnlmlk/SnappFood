@@ -16,32 +16,32 @@ class ScheduleResource extends JsonResource
     {
         return [
             'saturday' => [
-                'from' => $this->saturday[0],
-                'to' => $this->saturday[1],
+                'from' => optional($this->saturday)[0],
+                'to' => optional($this->saturday)[1],
                 ],
             'sunday' => [
-                'from' => $this->sunday[0],
-                'to' => $this->sunday[1],
+                'from' => optional($this->sunday)[0],
+                'to' => optional($this->sunday)[1],
             ],
             'monday' => [
-                'from' => $this->monday[0],
-                'to' => $this->monday[1],
+                'from' => optional($this->monday)[0],
+                'to' => optional($this->monday)[1],
             ],
             'tuesday' => [
-                'from' => $this->tuesday[0],
-                'to' => $this->tuesday[1],
+                'from' => optional($this->tuesday)[0],
+                'to' => optional($this->tuesday)[1],
             ],
             'wednesday' => [
-                'from' => $this->wednesday[0],
-                'to' => $this->wednesday[1],
+                'from' => optional($this->wednesday)[0],
+                'to' => optional($this->wednesday)[1],
             ],
             'thursday' => [
-                'from' => $this->thursday[0],
-                'to' => $this->thursday[1],
+                'from' => optional($this->thursday)[0],
+                'to' => optional($this->thursday)[1],
             ],
             'friday' => [
-                'from' => $this->friday[0],
-                'to' => $this->friday[1],
+                'from' => optional($this->friday)[0],
+                'to' => optional($this->friday)[1],
             ],
 
         ];

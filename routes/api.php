@@ -25,7 +25,13 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('Logout', [\App\Http\Controllers\API\AuthenticationController::class, 'logOut'])->name('API.Auth.logout');
 
     Route::apiResource('apiRestaurant', \App\Http\Controllers\API\RestaurantController::class);
-
-    Route::apiResource('apiFood', \App\Http\Controllers\API\FoodController::class);
     Route::get('apiRestaurant/{id}/foods', [\App\Http\Controllers\API\RestaurantController::class, 'food']);
+
+    Route::get('Carts', [\App\Http\Controllers\API\OrderController::class, 'getCards']);
+    Route::post('Carts/Add', [\App\Http\Controllers\API\OrderController::class, 'add']);
+    Route::put('Carts/Update', [\App\Http\Controllers\API\OrderController::class, 'update']);
+    Route::get('Carts/{cartId}', [\App\Http\Controllers\API\OrderController::class, 'getCard'])->whereNumber('cartId');
+    Route::post('Carts/{cartId}/Pay', [\App\Http\Controllers\API\OrderController::class, 'payCard'])->whereNumber('cartId');
+
+
 });

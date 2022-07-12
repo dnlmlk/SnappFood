@@ -11,7 +11,7 @@ class Food extends Model
 
     protected $fillable=['name', 'food_categories_id', 'raw_material', 'price', 'discount_id'];
     protected $appends = ['discounted_price'];
-    protected $visible = ['discounted_price'];
+    protected $visible = ['discounted_price', 'count', 'pivot_count'];
 
     public function getDiscountedPriceAttribute(){
         return $this->attributes['price'] * ((100 - Discount::find($this->attributes['discount_id'])->value) / 100);
@@ -27,5 +27,9 @@ class Food extends Model
 
     public function discount(){
         return $this->belongsTo(Discount::class);
+    }
+
+    public function orders(){
+        return $this->belongsToMany(Order::class)->withPivot('count');
     }
 }

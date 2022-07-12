@@ -53,6 +53,10 @@
                 </li>
 
                 <li class="t-center m-t-10 m-b-13">
+                    <a href="{{ route('order.History') }}" class="text-19">Orders Archive</a>
+                </li>
+
+                <li class="t-center m-t-10 m-b-13">
                     <a href="{{ route('Restaurant.create') }}" class="text-19">Settings</a>
                 </li>
 

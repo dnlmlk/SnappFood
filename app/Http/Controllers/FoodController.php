@@ -69,6 +69,7 @@ class FoodController extends Controller
             'imagePath' => 'mimes:jpg,jpeg,png'
         ]);
 
+
         if ($request->file('imagePath')) {
             $fileName = 'uploads/foodImages/' . time() . '_' . $request->file('imagePath')->getClientOriginalName();
             $path = $request->file('imagePath')->move(public_path('uploads/foodImages'), $fileName);
@@ -80,8 +81,8 @@ class FoodController extends Controller
                 'raw_material' => $request->input('material'),
                 'image_path' => $fileName,
                 'restaurant_id' => Restaurant::where('user_id', auth()->user()->id)->first()->id,
-                'discount_id' => $request->input('discount')
-
+                'discount_id' => $request->input('discount'),
+                'final_price' => isset($request->discount) ? ($request->price) * ((100 - Discount::find($request->discount)->value)/100) : $request->price,
             ]);
         }else{
             Food::insert([
@@ -90,7 +91,8 @@ class FoodController extends Controller
                 'food_categories_id' => $request->input('foodCategory'),
                 'raw_material' => $request->input('material'),
                 'restaurant_id' => Restaurant::where('user_id', auth()->user()->id)->first()->id,
-                'discount_id' => $request->input('discount')
+                'discount_id' => $request->input('discount'),
+                'final_price' => isset($request->discount) ? ($request->price) * ((100 - Discount::find($request->discount)->value)/100) : $request->price,
             ]);
         }
         return redirect()->route('ManageFood.index');
@@ -137,7 +139,9 @@ class FoodController extends Controller
             'imagePath' => 'mimes:jpg,jpeg,png'
         ]);
 
+
         if ($request->file('imagePath')) {
+
             $fileName = 'uploads/foodImages/' . time() . '_' . $request->file('imagePath')->getClientOriginalName();
             $request->file('imagePath')->move(public_path('uploads/foodImages'), $fileName);
 
@@ -147,12 +151,14 @@ class FoodController extends Controller
             $food->raw_material = $request->input('raw_material');
             $food->image_path = $fileName;
             $food->discount_id = $request->input('discount_id');
-
+            $food->final_price = isset($request->discount_id) ? ($request->price) * ((100 - Discount::find($request->discount_id)->value)/100) : $request->price;
 
             $food->save();
         }else{
-//            dd($request->all());
-           $food->update($request->all());
+
+            $food->update($request->all());
+            $food->final_price = isset($request->discount_id) ? ($request->price) * ((100 - Discount::find($request->discount_id)->value)/100) : $request->price;
+            $food->save();
         }
         return redirect()->route('ManageFood.index');
     }
