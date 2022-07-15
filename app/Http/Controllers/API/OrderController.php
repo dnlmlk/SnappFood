@@ -87,6 +87,31 @@ class OrderController extends Controller
 
     }
 
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'food_id' => ['required', Rule::exists('food', 'id')],
+        ]);
+
+        $order = Order::where('restaurant_id', Food::find($request->food_id)->restaurant->id)->first();
+
+        $gate = Gate::inspect('update', $order);
+
+        if ($gate->allowed()) {
+
+            $foods = $order->foods->first()->pivot->pluck('food_id')->toArray();
+            if (!in_array($request->food_id, $foods)) return response("this food isn't added yet");
+
+            $pivot = $order->foods->first()->pivot->where('food_id', $request->food_id)->first();
+            $pivot->delete();
+
+            return response('food is deleted');
+        }
+
+        return response(['msg' => $gate->message()]);
+
+    }
+
 
     public function payCard($id)
     {

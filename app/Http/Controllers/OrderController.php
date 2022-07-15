@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
+use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -44,6 +47,8 @@ class OrderController extends Controller
         elseif ($sellerStatus == 'send') $order->seller_status = 'delivered';
 
         $order->save();
+
+        SendEmailJob::dispatch($order);
 
         return redirect()->route('order.getOrder');
     }

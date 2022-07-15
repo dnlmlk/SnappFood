@@ -32,6 +32,5 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::put('Carts/Update', [\App\Http\Controllers\API\OrderController::class, 'update']);
     Route::get('Carts/{cartId}', [\App\Http\Controllers\API\OrderController::class, 'getCard'])->whereNumber('cartId');
     Route::post('Carts/{cartId}/Pay', [\App\Http\Controllers\API\OrderController::class, 'payCard'])->whereNumber('cartId');
-
-
+    Route::delete('Carts/Delete', [\App\Http\Controllers\API\OrderController::class, 'destroy']);
 });
