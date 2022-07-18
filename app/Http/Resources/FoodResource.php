@@ -23,8 +23,8 @@ class FoodResource extends JsonResource
                 [
                     'off' =>
                         [
-                            'label' => optional($this->discount) ->value,
-                            'factor' => (100 - optional($this->discount)->value)/100
+                            'label' => $this->discount?->value,
+                            'factor' => (100 - $this->discount?->value)/100
                         ]
                 ]
             ),
