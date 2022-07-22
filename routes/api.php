@@ -33,4 +33,16 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('Carts/{cartId}', [\App\Http\Controllers\API\OrderController::class, 'getCard'])->whereNumber('cartId');
     Route::post('Carts/{cartId}/Pay', [\App\Http\Controllers\API\OrderController::class, 'payCard'])->whereNumber('cartId');
     Route::delete('Carts/Delete', [\App\Http\Controllers\API\OrderController::class, 'destroy']);
+
+    Route::post('Comments', [\App\Http\Controllers\API\CommentController::class, 'store']);
+    Route::get('Comments', [\App\Http\Controllers\API\CommentController::class, 'index']);
+
+//    Route::delete('Comment/Delete/{id}', function ($id){
+//        \App\Models\Comment::find($id)->delete();
+//    });
+//
+//    Route::post('Comment/Restore/{id}', function ($id){
+//
+//        \App\Models\Comment::withTrashed()->find($id)->restore();
+//    });
 });

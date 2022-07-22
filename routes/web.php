@@ -39,6 +39,9 @@ Route::get('Order', [\App\Http\Controllers\OrderController::class, 'getOrder'])-
 Route::put('Order/update', [\App\Http\Controllers\OrderController::class, 'update'])->middleware(['auth', 'seller'])->name('order.update');
 Route::get('Order/History', [\App\Http\Controllers\OrderController::class, 'getOrders'])->middleware(['auth', 'seller'])->name('order.History');
 
+Route::get('Comment', [\App\Http\Controllers\CommentController::class, 'index'])->middleware(['auth', 'seller'])->name('comments');
+Route::delete('Comment/Delete', [\App\Http\Controllers\CommentController::class, 'delete'])->middleware(['auth', 'seller'])->name('comments.delete');
+Route::post('Comment/Answer', [\App\Http\Controllers\CommentController::class, 'answer'])->middleware(['auth', 'seller'])->name('comments.answer');
 
 Route::get('/dashboardd', function () {
 
