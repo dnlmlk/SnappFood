@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage comments</a>
+                    <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
                 </li>
 
                 <li class="t-center m-b-13">

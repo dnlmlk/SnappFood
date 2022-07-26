@@ -79,7 +79,7 @@ class CommentController extends Controller
             ]);
         }
 
-        return response(['msg' => $gate->message() ?? 'comment created successfully']);
+        return response(['Message' => $gate->message() ?? 'comment created successfully']);
 
 
     }

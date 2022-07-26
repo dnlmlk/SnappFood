@@ -19,7 +19,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return response(AddressResource::collection(User::find(auth()->user()->id)->addresses));
+        $addresses = AddressResource::collection(User::find(auth()->user()->id)->addresses);
+        return response(['All Addresses' => $addresses]);
     }
 
     /**
@@ -44,7 +45,7 @@ class AddressController extends Controller
             'longitude' => $fields['longitude'],
         ]);
 
-        return response(['Your address is submitted successfully', new AddressResource($address)]);
+        return response(['Message' => 'Your address is submitted successfully','Address details' => new AddressResource($address)]);
     }
 
 
@@ -68,10 +69,10 @@ class AddressController extends Controller
                 'longitude' => 'numeric',
             ]);
             $address->update($request->all());
-            return response(['Your address is updated successfully', new AddressResource($address)]);
+            return response(['Message' => 'Your address is updated successfully','Address details' => new AddressResource($address)]);
         }
 
-        return response("You don't have access", 403);
+        return response(['Message' => "You don't have access"], 403);
     }
 
     /**
@@ -92,9 +93,9 @@ class AddressController extends Controller
                 else $address->update(['active' => '0']);
             }
 
-            return response(['Your main address is updated', AddressResource::collection(User::find(auth()->user()->id)->addresses)]);
+            return response(['Message' => 'Your main address is updated', 'Active address' => AddressResource::collection(User::find(auth()->user()->id)->addresses)->where('active', '1')]);
         }
 
-        return response("You don't have access", 403);
+        return response(['Message' => "You don't have access to this address"], 403);
     }
 }

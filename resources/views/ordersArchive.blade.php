@@ -60,6 +60,10 @@
                 </li>
 
                 <li class="t-center m-t-10 m-b-13">
+                    <a href="{{ route('report') }}" class="text-19">Finance Report</a>
+                </li>
+
+                <li class="t-center m-t-10 m-b-13">
                     <a href="{{ route('Restaurant.create') }}" class="text-19">Settings</a>
                 </li>
 
@@ -88,20 +92,44 @@
         </h2>
     </section>
 
+
+    <form action="{{ route('order.History') }}" method="get" class="d-flex">
+
+        <div class=" m-auto bg-dark w-100 text-center">
+            <select class="form-select" name="filter" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <option value="all" selected>All</option>
+                <option value="lastWeek">Last Week</option>
+                <option value="lastMonth">Last Month</option>
+                <option value="lastYear">Last Year</option>
+            </select>
+
+            <input class="btn btn-primary mt-1 mb-1" type="submit" value="Filter">
+        </div>
+
+    </form>
+
+
     @if($orders->first())
         @foreach($orders as $order)
             <div class="card mx-auto p-3 bg-light">
-                <div class="card-body">
-                    <h5 class="card-title">Orders</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Order Id : {{ $order->id ?? '' }}</h6>
-                    <h5 class="mb-1 mt-3">Foods</h5>
-                    <ul class="ml-3 mb-3">
-                        @foreach($order->foods as $food)
-                            <li>{{ $food->name . ' ⇒ ' . $food->getOriginal()['pivot_count'] }}</li>
-                        @endforeach
-                    </ul>
-                    <p class="card-text"><span class="text-danger">Level: {{ $order->seller_status ?? '' }}</span></p>
+                <div class="d-flex">
+                    <div class="card-body">
+                        <h5 class="card-title">Orders</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Order Id : {{ $order->id ?? '' }}</h6>
+                        <h5 class="mb-1 mt-3">Foods</h5>
+                        <ul class="ml-3 mb-3">
+                            @foreach($order->foods as $food)
+                                <li>{{ $food->name . ' ⇒ ' . $food->getOriginal()['pivot_count'] }}</li>
+                            @endforeach
+                        </ul>
+                        <p class="card-text"><span class="text-danger">Level: {{ $order->seller_status ?? '' }}</span></p>
+                    </div>
+
+                    <div class="m-auto">
+                        <h4 class="text-danger mr-5">Total Price: <span class="text-success">{{ $order->total_price }}$</span></h4>
+                    </div>
                 </div>
+
 
                 <div class="progress">
                     @if($order->seller_status == 'pending')
@@ -117,9 +145,9 @@
             </div>
         @endforeach
 
-        <div class="mt-3 text-center">
-            {{ $orders->links() }}
-        </div>
+{{--        <div class="mt-3 text-center">--}}
+{{--            {{ $orders->links() }}--}}
+{{--        </div>--}}
 
     @endif
 

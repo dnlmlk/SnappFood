@@ -26,7 +26,7 @@
                 </li>
 
                 <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage comments</a>
+                    <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
                 </li>
 
                 <li class="t-center m-b-13">
@@ -58,6 +58,10 @@
 
                 <li class="t-center m-t-10 m-b-13">
                     <a href="{{ route('order.History') }}" class="text-19">Orders Archive</a>
+                </li>
+
+                <li class="t-center m-t-10 m-b-13">
+                    <a href="{{ route('report') }}" class="text-19">Finance Report</a>
                 </li>
 
                 <li class="t-center m-t-10 m-b-13">

@@ -1,5 +1,6 @@
 <?php
 
+use Chartisan\PHP\Chartisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,15 @@ Route::get('Order/History', [\App\Http\Controllers\OrderController::class, 'getO
 Route::get('Comment', [\App\Http\Controllers\CommentController::class, 'index'])->middleware(['auth', 'seller'])->name('comments');
 Route::delete('Comment/Delete', [\App\Http\Controllers\CommentController::class, 'delete'])->middleware(['auth', 'seller'])->name('comments.delete');
 Route::post('Comment/Answer', [\App\Http\Controllers\CommentController::class, 'answer'])->middleware(['auth', 'seller'])->name('comments.answer');
+
+Route::get('Comments/Admin', [\App\Http\Controllers\AdminCommentController::class, 'index'])->middleware(['auth', 'admin'])->name('comments.admin');
+Route::post('Comments/Admin/Restore/{id}', [\App\Http\Controllers\AdminCommentController::class, 'restore'])->middleware(['auth', 'admin'])->name('comments.admin.restore');
+Route::delete('Comments/Admin/Delete/{id}', [\App\Http\Controllers\AdminCommentController::class, 'delete'])->middleware(['auth', 'admin'])->name('comments.admin.delete');
+
+Route::get('Report', [\App\Http\Controllers\ReportController::class, 'index'])->middleware(['auth', 'seller'])->name('report');
+Route::post('Report/Download', [\App\Http\Controllers\ReportController::class, 'export'])->middleware(['auth', 'seller'])->name('report.download');
+Route::post('Report/Download/Orders', [\App\Http\Controllers\ReportController::class, 'orderExport'])->middleware(['auth', 'seller'])->name('report.orders.download');
+
 
 Route::get('/dashboardd', function () {
 

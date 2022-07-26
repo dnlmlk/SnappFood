@@ -6,6 +6,7 @@ use App\Jobs\SendEmailJob;
 use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Restaurant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,9 +17,30 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getOrders()
+    public function getOrders(Request $request)
     {
-        $orders = Order::where('restaurant_id', Restaurant::where('user_id', auth()->user()->id)->first()->id)->orderBy('created_at', 'desc')->paginate(3);
+        $orders = Order::where('restaurant_id', Restaurant::where('user_id', auth()->user()->id)->first()->id)->orderBy('created_at')->get();
+        $index = 0;
+
+        if ($request->filter == 'lastWeek') {
+            foreach ($orders as $order) {
+                if (Carbon::now()->diff($order->created_at)->days > 7) unset($orders[$index]);
+                $index++;
+            }
+        }
+        elseif ($request->filter == 'lastMonth'){
+            foreach ($orders as $order) {
+                if (Carbon::now()->diff($order->created_at)->days > 30) unset($orders[$index]);
+                $index++;
+            }
+        }
+        elseif ($request->filter == 'lastYear'){
+            foreach ($orders as $order) {
+                if (Carbon::now()->diff($order->created_at)->days > 365) unset($orders[$index]);
+                $index++;
+            }
+        }
+
         return view('ordersArchive', ['orders' => $orders]);
     }
 

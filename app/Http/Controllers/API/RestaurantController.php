@@ -38,23 +38,33 @@ class RestaurantController extends Controller
         $answer = [];
         $userAddress = auth()->user()->addresses->where('active', 1)->first();
 
-        if ($userAddress == null) return \response(['msg' => "You don't have active Address"]);
+        if ($userAddress == null) return \response(['Message' => "You don't have active Address"]);
 
+        $answer2 =[];
         foreach ($restaurants as $restaurant) {
-            if ( sqrt(($restaurant->address->longitude - $userAddress->longitude)**2 + ($restaurant->address->latitude - $userAddress->latitude)**2 ) <= 0.05)
+            $answer2 []= sqrt(($restaurant->address->longitude - $userAddress->longitude)**2 + ($restaurant->address->latitude - $userAddress->latitude)**2 );
+
+            if ( sqrt(($restaurant->address->longitude - $userAddress->longitude)**2 + ($restaurant->address->latitude - $userAddress->latitude)**2 ) <= 0.15)
                 $answer[] = $restaurant;
         }
 
-        return RestaurantResource::collection($answer);
+        return \response(['Restaurants near you:' => RestaurantResource::collection($answer)]);
     }
 
 
     public function show($id)
     {
-        return new RestaurantResource(Restaurant::find($id));
+        $restaurant_IDs = Restaurant::all()->pluck('id')->toArray();
+        if (!in_array($id, $restaurant_IDs)) return \response(['Message' => "'This restaurant isn't exist"]);
+
+        return \response(["Restaurants number $id details:" => new RestaurantResource(Restaurant::find($id))]);
     }
 
     public function food($id){
-        return new RestaurantFoodsResource(Restaurant::find($id));
+
+        $restaurant_IDs = Restaurant::all()->pluck('id')->toArray();
+        if (!in_array($id, $restaurant_IDs)) return \response(['Message' => "'This restaurant isn't exist"]);
+
+        return \response(["Foods details of restaurant number $id:" => new RestaurantFoodsResource(Restaurant::find($id))]);
     }
 }

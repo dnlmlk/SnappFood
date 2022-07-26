@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CardResource;
 use App\Models\Food;
 use App\Models\Order;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,7 @@ class OrderController extends Controller
 
         if (Gate::allows('view', $order))
             return response(new CardResource($order));
-        else return response(['msg' => "this isn't your cart"]);
+        else return response(['Message' => "this isn't your cart"]);
     }
 
     public function add(Request $request)
@@ -39,12 +40,16 @@ class OrderController extends Controller
         $order = Order::where(['user_id' => auth()->user()->id, 'restaurant_id' => Food::find($request->food_id)->restaurant->id, 'customer_status' => 'unpaid'])->first();
 
         if ($order){
-            $foods = $order->foods->first()->pivot->pluck('food_id')->toArray();
+            $foods = $order->foods->pluck('id')->toArray();
             if (in_array($request->food_id, $foods)){
-                return response('this food is exist already');
+                return response(['Message' => 'This food is exist to your card already']);
             }
             else{
                 $order->foods()->attach(['food_id' => $request->food_id], ['count' => $request->count]);
+
+                $totalPrice = $order->total_price;
+                $order->total_price = $totalPrice + Food::find($request->food_id)->final_price * $request->count;
+                $order->save();
             }
         }
 
@@ -52,11 +57,12 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => auth()->user()->id,
                 'restaurant_id' => Food::find($request->food_id)->restaurant->id,
+                'total_price' => Food::find($request->food_id)->final_price * $request->count
             ]);
 
             $order->foods()->attach(['food_id' => $request->food_id], ['count' => $request->count]);
         }
-        return response(['msg' => 'food added successfully', 'cart_id' => $order->id]);
+        return response(['Message' => 'Food added to card successfully', 'Cart ID' => $order->id]);
     }
 
 
@@ -67,7 +73,8 @@ class OrderController extends Controller
             'count' => 'required|integer|min:1'
         ]);
 
-        $order = Order::where('restaurant_id', Food::find($request->food_id)->restaurant->id)->first();
+        $order = Order::where(['restaurant_id' => Food::find($request->food_id)->restaurant->id, 'user_id' => auth()->user()->id, 'customer_status' => 'unpaid'])->first();
+        if ($order == null) return \response(['Message' => "You don't have unpaid card"]);
 
         $gate = Gate::inspect('update', $order);
 
@@ -77,13 +84,18 @@ class OrderController extends Controller
             if (!in_array($request->food_id, $foods)) return response("this food isn't added yet");
 
             $pivot = $order->foods->first()->pivot->where('food_id', $request->food_id)->first();
+            $food_id = $pivot->food_id;
+            $oldCount = $pivot->count;
             $pivot->count = $request->count;
             $pivot->save();
 
-            return response('count of food is updated');
+            $order->total_price += ((Food::find($food_id)->final_price * $request->count) - (Food::find($food_id)->final_price * $oldCount));
+            $order->save();
+
+            return response(['Message' => 'count of food is updated']);
         }
 
-        return response(['msg' => $gate->message()]);
+        return response(['Message' => $gate->message()]);
 
     }
 
@@ -93,22 +105,30 @@ class OrderController extends Controller
             'food_id' => ['required', Rule::exists('food', 'id')],
         ]);
 
-        $order = Order::where('restaurant_id', Food::find($request->food_id)->restaurant->id)->first();
+        $order = Order::where(['restaurant_id' => Food::find($request->food_id)->restaurant->id, 'user_id' => auth()->user()->id, 'customer_status' => 'unpaid'])->first();
+        if ($order == null) return \response(['Message' => "You don't have unpaid card"]);
+
 
         $gate = Gate::inspect('update', $order);
 
         if ($gate->allowed()) {
 
             $foods = $order->foods->first()->pivot->pluck('food_id')->toArray();
-            if (!in_array($request->food_id, $foods)) return response("this food isn't added yet");
+            if (!in_array($request->food_id, $foods)) return response(['Message' => "this food isn't added yet"]);
 
             $pivot = $order->foods->first()->pivot->where('food_id', $request->food_id)->first();
+
+
+            $order->total_price -= (Food::find($request->food_id)->final_price * $pivot->count);
+
             $pivot->delete();
 
-            return response('food is deleted');
+            $order->save();
+
+            return response(['Message' => 'food is deleted']);
         }
 
-        return response(['msg' => $gate->message()]);
+        return response(['Message' => $gate->message()]);
 
     }
 
@@ -122,9 +142,9 @@ class OrderController extends Controller
         if ($gate->allowed()){
             $order->customer_status = 'paid';
             $order->save();
-             return response(['msg' => "cart number $id paid successfully"]);
+             return response(['Message' => "cart number $id paid successfully"]);
         }
 
-        return response(['msg' => $gate->message()]);
+        return response(['Message' => $gate->message()]);
     }
 }

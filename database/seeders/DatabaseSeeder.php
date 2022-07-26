@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Restaurant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,6 +26,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RestaurantCategoriesSeeder::class,
             FoodCategoriesSeeder::class,
+            AddressSeeder::class,
+            RestaurantSeeder::class,
+            ScheduleSeeder::class,
+            FoodSeeder::class,
         ]);
     }
 }

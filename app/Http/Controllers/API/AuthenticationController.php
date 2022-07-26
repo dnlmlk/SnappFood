@@ -28,13 +28,13 @@ class AuthenticationController extends Controller
 
         $token = $user->createToken('token_base_name')->plainTextToken;
 
-        return response(['You registered successfully', $token], 201);
+        return response(['Message' =>'You registered successfully', 'Token' => $token], 201);
     }
 
     public function logOut()
     {
         auth()->user()->tokens()->delete();
-        return response('you log outed');
+        return response(['Message' => 'you log outed']);
     }
 
     public function logIn(Request $request)
@@ -52,7 +52,7 @@ class AuthenticationController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-        return response(['you are log in', $user->createToken('token_base_name')->plainTextToken]);
+        return response(['Message' => 'you are log in', 'Token' => $user->createToken('token_base_name')->plainTextToken]);
     }
 
 }

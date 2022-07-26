@@ -57,11 +57,14 @@ class CartPolicy
      */
     public function update(User $user, Order $order)
     {
-        if ($order->user_id === $user->id) {
-            if ($order->customer_status == 'unpaid') return Response::allow();
-            return Response::deny("this card is paid and you can't update it");
+        if ($order != null) {
+            if ($order->user_id === $user->id) {
+                if ($order->customer_status == 'unpaid') return Response::allow();
+                return Response::deny("this card is paid and you can't update it");
+            }
+            return Response::deny("this isn't your card");
         }
-        return Response::deny("this isn't your card");
+        return Response::deny("You don't have unpaid card");
 
     }
 
