@@ -41,7 +41,7 @@ class OrderController extends Controller
             }
         }
 
-        return view('ordersArchive', ['orders' => $orders]);
+        return view('seller.report&comment.ordersArchive', ['orders' => $orders]);
     }
 
 

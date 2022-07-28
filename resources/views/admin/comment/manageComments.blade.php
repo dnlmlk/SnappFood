@@ -23,7 +23,7 @@
                                 <h2 class="my-4">Manage Comments</h2>
                             </div>
 
-                            <table class="table text-white mb-0">
+                            <table class="table text-white mb-0 text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">Comment ID</th>
@@ -35,9 +35,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach($comments as $comment)
-                                        <tr class="fw-normal">
+                                        <tr class="align-middle">
                                             <th>
-                                                <span class="ms-2">{{ $comment->id }}</span>
+                                                <span class="ms-4">{{ $comment->id }}</span>
                                             </th>
                                             <td class="align-middle">
                                                 <span>{{ $comment->food->restaurant->user->name }}</span>
@@ -65,10 +65,16 @@
 
                                 </tbody>
                             </table>
+
+                            <div class="mt-3 d-flex justify-content-center">
+                                {{ $comments->links() }}
+                            </div>
+
                         </div>
+
                     </div>
 
-                    <div class="text-center mt-2">
+                    <div class="text-center mt-2 mb-3">
                         <a class="m-auto btn btn-danger" href="{{ route('dashboard') }}">Home</a>
                     </div>
 

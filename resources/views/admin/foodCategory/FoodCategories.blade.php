@@ -9,6 +9,7 @@
         <!-- - -->
         <ul class="menu-sidebar p-t-95 p-b-70">
 
+
             @if(auth()->user()->role == 'admin')
                 <li class="t-center m-b-13">
                     <a href="{{ route('RestaurantCategories.index') }}" class="txt19">Restaurants categories</a>
@@ -24,10 +25,6 @@
 
                 <li class="t-center m-b-13">
                     <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
-                </li>
-
-                <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage banners</a>
                 </li>
 
             @endif
@@ -46,22 +43,22 @@
 @section('content')
     <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('rCategories/img/background.jpg') }});">
         <h2 class="txt1 t-center">
-            Manage Discounts
+            Food Categories
         </h2>
     </section>
 
-    <form class="wrap-form-booking p-t-40 p-b-20" method="post" action="{{ route('Discount.store') }}">
+    <form class="wrap-form-booking p-t-40 p-b-20" method="post" action="{{ route('FoodCategories.store') }}">
         @csrf
 
         <div class="row">
             <div class="col-md-12">
                 <!-- Date -->
                 <span class="txt9">
-                    Add Discount
+                    Add Category
                 </span>
 
                 <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="number" name="value">
+                    <input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name">
                 </div>
 
 
@@ -80,21 +77,21 @@
     <table class="table ">
         <thead>
         <tr>
-            <th scope="col">Discount value</th>
+            <th scope="col">Category name</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($discounts as $discount)
+        @foreach($categories as $category)
             <form method="get">
                 @csrf
 
                 <tr>
-                    <td>{{ $discount->value . '%' }}</td>
+                    <td>{{ $category->name }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="submit" class="btn btn-secondary" formaction="{{ route( 'Discount.edit', $discount->id) }}">Edit</button>
-                            <button type="submit" class="btn btn-secondary" formaction="{{ route('Discount.sendDeleteParam', $discount->id) }}">Delete</button>
+                            <button type="submit" class="btn btn-secondary" formaction="{{ route( 'FoodCategories.edit', $category->id) }}">Edit</button>
+                            <button type="submit" class="btn btn-secondary" formaction="{{ route('FoodCategories.sendDeleteParam', $category->id) }}">Delete</button>
                         </div>
                     </td>
                 </tr>
@@ -104,6 +101,9 @@
         </tbody>
     </table>
 
+    <div class="mt-3">
+        {{ $categories->links() }}
+    </div>
 
 
 @endsection

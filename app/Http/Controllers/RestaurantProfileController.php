@@ -20,7 +20,7 @@ class RestaurantProfileController extends Controller
     {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $categories = RestaurantCategories::pluck('name', 'id');
-        return view('sellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
+        return view('seller.restaurantSettings.sellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
     }
 
     /**
@@ -32,7 +32,7 @@ class RestaurantProfileController extends Controller
     {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $categories = RestaurantCategories::pluck('name', 'id');
-        return view('editSellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
+        return view('seller.restaurantSettings.editSellerProfile', ['restaurant' => $restaurant, 'categories' => $categories]);
     }
 
     /**

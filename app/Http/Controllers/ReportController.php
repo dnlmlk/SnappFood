@@ -47,7 +47,7 @@ class ReportController extends Controller
         }
 
 
-        return view('report', ['filter' => $request->filter ?? 'all', 'totalIncome' => $totalIncome, 'totalSales' => $totalSales]);
+        return view('seller.report&comment.report', ['filter' => $request->filter ?? 'all', 'totalIncome' => $totalIncome, 'totalSales' => $totalSales]);
     }
 
     public function export(Request $request)

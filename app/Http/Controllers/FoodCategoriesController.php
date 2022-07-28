@@ -15,8 +15,8 @@ class FoodCategoriesController extends Controller
      */
     public function index()
     {
-        $categories = FoodCategories::all();
-        return view('FoodCategories',['categories' => $categories]);
+        $categories = FoodCategories::paginate(5);
+        return view('admin.foodCategory.FoodCategories',['categories' => $categories]);
     }
 
 
@@ -31,7 +31,7 @@ class FoodCategoriesController extends Controller
         FoodCategories::insert([
             'name' => $request->input('name')
         ]);
-        return $this->index();
+        return redirect()->route('FoodCategories.index');
     }
 
 
@@ -44,7 +44,7 @@ class FoodCategoriesController extends Controller
      */
     public function edit($id)
     {
-        return view('editFoodCategory', ['id' => $id, 'name' => FoodCategories::find($id)->name]);
+        return view('admin.foodCategory.editFoodCategory', ['id' => $id, 'name' => FoodCategories::find($id)->name]);
     }
 
     /**
@@ -59,7 +59,7 @@ class FoodCategoriesController extends Controller
         $category = FoodCategories::find($id);
         $category->name = $request->input('editedName');
         $category->save();
-        return $this->index();
+        return redirect()->route('FoodCategories.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class FoodCategoriesController extends Controller
     public function destroy($id)
     {
         FoodCategories::destroy($id);
-        return $this->index();
+        return redirect()->route('FoodCategories.index');
     }
 
     public function sendDeleteParam($id){

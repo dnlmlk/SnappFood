@@ -24,11 +24,6 @@
                 <li class="t-center m-b-13">
                     <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
                 </li>
-
-                <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage banners</a>
-                </li>
-
             @endif
 
             <li class="t-center m-b-33">

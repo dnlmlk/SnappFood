@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\updateScheduleRequest;
 use App\Models\Schedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -17,7 +18,7 @@ class ScheduleController extends Controller
     {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
-        return view('schedule', ['schedule' => $schedule]);
+        return view('seller.restaurantSettings.schedule', ['schedule' => $schedule]);
     }
 
     /**
@@ -29,7 +30,7 @@ class ScheduleController extends Controller
     {
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
-        return view('editSchedule', ['schedule' => $schedule]);
+        return view('seller.restaurantSettings.editSchedule', ['schedule' => $schedule]);
     }
 
     /**
@@ -41,6 +42,7 @@ class ScheduleController extends Controller
     public function store(updateScheduleRequest $request)
     {
         $validated = $request->validated();
+
 
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();
         $schedule = Schedule::where('restaurant_id', $restaurant->id)->first();
@@ -67,6 +69,7 @@ class ScheduleController extends Controller
      */
     public function update(updateScheduleRequest $request)
     {
+
         $validated = $request->validated();
 
         $restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first();

@@ -72,13 +72,12 @@ class CartPolicy
     public function pay(User $user, Order $order)
     {
         $thisDay = strtolower(Carbon::now()->isoFormat('dddd'));
-        $thisHour = Carbon::now()->isoFormat('H');
+        $thisHour = \DateTime::createFromFormat('H:i', date('H:i'));
 
-
-        if($order->user_id === $user->id ) {
+        if($order->user_id == $user->id || is_null($order)) {
             if ($order->restaurant->status == 'open') {
                 if ($order->restaurant->schedule->{$thisDay} != null) {
-                    if ($thisHour <= $order->restaurant->schedule->{$thisDay}[1] && $thisHour >= $order->restaurant->schedule->{$thisDay}[0]) {
+                    if ($thisHour <= \DateTime::createFromFormat('H:i',$order->restaurant->schedule->{$thisDay}[1]) && $thisHour >= \DateTime::createFromFormat('H:i',$order->restaurant->schedule->{$thisDay}[0])) {
                         if ($order->customer_status == 'unpaid') return Response::allow();
                         return Response::deny('this cart is paid');
                     }

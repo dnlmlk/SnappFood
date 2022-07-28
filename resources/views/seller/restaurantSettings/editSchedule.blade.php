@@ -111,7 +111,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('saturday1') ?? $schedule->saturday[0] ?? ""}}" type="text" name="saturday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('saturday1') ?? $schedule->saturday[0] ?? ""}}" type="time" name="saturday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -121,7 +121,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('sunday1') ?? $schedule->sunday[0] ?? ""}}" type="text" name="sunday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('sunday1') ?? $schedule->sunday[0] ?? ""}}" type="time" name="sunday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -130,7 +130,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('monday1') ?? $schedule->monday[0] ?? ""}}" type="text" name="monday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('monday1') ?? $schedule->monday[0] ?? ""}}" type="time" name="monday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -139,7 +139,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('tuesday1') ?? $schedule->tuesday[0] ?? ""}}" type="text" name="tuesday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('tuesday1') ?? $schedule->tuesday[0] ?? ""}}" type="time" name="tuesday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -148,7 +148,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('wednesday1') ?? $schedule->wednesday[0] ?? ""}}" type="text" name="wednesday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('wednesday1') ?? $schedule->wednesday[0] ?? ""}}" type="time" name="wednesday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -157,7 +157,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('thursday1') ?? $schedule->thursday[0] ?? ""}}" type="text" name="thursday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('thursday1') ?? $schedule->thursday[0] ?? ""}}" type="time" name="thursday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -166,7 +166,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('friday1') ?? $schedule->friday[0] ?? ""}}" type="text" name="friday1">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('friday1') ?? $schedule->friday[0] ?? ""}}" type="time" name="friday1">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('saturday2') ?? $schedule->saturday[1] ?? ""}}" type="text" name="saturday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('saturday2') ?? $schedule->saturday[1] ?? ""}}" type="time" name="saturday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -187,7 +187,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('sunday2') ?? $schedule->sunday[1] ?? ""}}" type="text" name="sunday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('sunday2') ?? $schedule->sunday[1] ?? ""}}" type="time" name="sunday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -196,7 +196,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('monday2') ?? $schedule->monday[1] ?? ""}}" type="text" name="monday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('monday2') ?? $schedule->monday[1] ?? ""}}" type="time" name="monday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -205,7 +205,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('tuesday2') ?? $schedule->tuesday[1] ?? ""}}" type="text" name="tuesday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('tuesday2') ?? $schedule->tuesday[1] ?? ""}}" type="time" name="tuesday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -214,7 +214,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('wednesday2') ?? $schedule->wednesday[1] ?? ""}}" type="text" name="wednesday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('wednesday2') ?? $schedule->wednesday[1] ?? ""}}" type="time" name="wednesday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -223,7 +223,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('thursday2') ?? $schedule->thursday[1] ?? ""}}" type="text" name="thursday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('thursday2') ?? $schedule->thursday[1] ?? ""}}" type="time" name="thursday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 
@@ -232,7 +232,7 @@
 								</span>
 
                             <div class="w-50 wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('friday2') ?? $schedule->friday[1] ?? ""}}" type="text" name="friday2">
+                                <input class="bo-rad-10 sizefull txt10 p-l-20" value="{{ old('friday2') ?? $schedule->friday[1] ?? ""}}" type="time" name="friday2">
                                 <i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
                             </div>
 

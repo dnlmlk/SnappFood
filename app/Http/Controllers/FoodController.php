@@ -37,7 +37,7 @@ class FoodController extends Controller
         else $max = 0;
 
 
-        return view('manageFood', ['foods' => $foods, 'categories' => $categories, 'max' => $max]);
+        return view('seller.menu.manageFood', ['foods' => $foods, 'categories' => $categories, 'max' => $max]);
     }
 
     /**
@@ -50,7 +50,7 @@ class FoodController extends Controller
         $categories = FoodCategories::pluck('name', 'id');
         $discounts = Discount::all();
 
-        return view('addFood', ['categories' => $categories, 'discounts' => $discounts]);
+        return view('seller.menu.addFood', ['categories' => $categories, 'discounts' => $discounts]);
     }
 
     /**
@@ -115,7 +115,7 @@ class FoodController extends Controller
         $discounts = Discount::all();
 
 
-        return view('editFood', ['id' => $id, 'food' => $food, 'categories' => $categories, 'discounts' => $discounts]);
+        return view('seller.menu.editFood', ['id' => $id, 'food' => $food, 'categories' => $categories, 'discounts' => $discounts]);
     }
 
     /**
@@ -193,7 +193,7 @@ class FoodController extends Controller
         }
 
 
-        return view('forAjax', ['foods' => $foods]);
+        return view('seller.menu.forAjax', ['foods' => $foods]);
     }
 
     public function ajaxSearch(Request $request){
@@ -205,7 +205,7 @@ class FoodController extends Controller
             if ($gate == false) unset($foods[$index]);
         }
 
-        return view('forAjax', ['foods' => $foods]);
+        return view('seller.menu.forAjax', ['foods' => $foods]);
 
     }
 }

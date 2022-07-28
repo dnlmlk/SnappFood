@@ -10,8 +10,8 @@ class AdminCommentController extends Controller
 {
     public function index()
     {
-        $commets = Comment::onlyTrashed()->get();
-        return view('manageComments', ['comments' => $commets]);
+        $commets = Comment::onlyTrashed()->paginate(5);
+        return view('admin.comment.manageComments', ['comments' => $commets]);
     }
 
     public function restore($id)

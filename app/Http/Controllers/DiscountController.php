@@ -15,8 +15,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $discounts = Discount::all();
-        return view('discount',['discounts' => $discounts]);
+        $discounts = Discount::paginate(5);
+        return view('admin.discount.discount',['discounts' => $discounts]);
     }
 
 
@@ -31,7 +31,7 @@ class DiscountController extends Controller
         Discount::insert([
             'value' => $request->input('value')
         ]);
-        return $this->index();
+        return redirect()->route('Discount.index');
     }
 
 
@@ -44,7 +44,7 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
-        return view('editDiscount', ['id' => $id, 'value' => Discount::find($id)->value]);
+        return view('admin.discount.editDiscount', ['id' => $id, 'value' => Discount::find($id)->value]);
     }
 
     /**
@@ -59,7 +59,7 @@ class DiscountController extends Controller
         $discount = Discount::find($id);
         $discount->value = $request->input('editedValue');
         $discount->save();
-        return $this->index();
+        return redirect()->route('Discount.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         Discount::destroy($id);
-        return $this->index();
+        return redirect()->route('Discount.index');
     }
 
     public function sendDeleteParam($id){

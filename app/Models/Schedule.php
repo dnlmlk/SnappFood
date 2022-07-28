@@ -45,7 +45,7 @@ class Schedule extends Model
     public function setMondayAttribute($value)
     {
         if ($value == ',') $value = null;
-            $this->attributes['monday'] = $value;
+        $this->attributes['monday'] = $value;
     }
 
     public function getMondayAttribute($value)

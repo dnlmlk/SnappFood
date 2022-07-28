@@ -17,8 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('Register', [\App\Http\Controllers\API\AuthenticationController::class, 'register'])->name('API.Auth.register');
 Route::post('Login', [\App\Http\Controllers\API\AuthenticationController::class, 'logIn'])->name('API.Auth.login');
 
+
 Route::middleware('auth:sanctum')->group(function ()
 {
+    Route::put('Personal/Edit', [\App\Http\Controllers\API\UserInformationController::class, 'edit'])->name('User.Edit');
+
     Route::resource('Addresses', \App\Http\Controllers\API\AddressController::class);
     Route::post('Addresses/{Address}', [\App\Http\Controllers\API\AddressController::class, 'setActiveAddress'])->name('Address.setActiveAddress');
 
@@ -37,12 +40,4 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('Comments', [\App\Http\Controllers\API\CommentController::class, 'store']);
     Route::get('Comments', [\App\Http\Controllers\API\CommentController::class, 'index']);
 
-//    Route::delete('Comment/Delete/{id}', function ($id){
-//        \App\Models\Comment::find($id)->delete();
-//    });
-//
-//    Route::post('Comment/Restore/{id}', function ($id){
-//
-//        \App\Models\Comment::withTrashed()->find($id)->restore();
-//    });
 });

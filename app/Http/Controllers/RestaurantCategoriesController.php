@@ -14,8 +14,8 @@ class RestaurantCategoriesController extends Controller
      */
     public function index()
     {
-        $categories = RestaurantCategories::all();
-        return view('RestaurantCategories',['categories' => $categories]);
+        $categories = RestaurantCategories::paginate(5);
+        return view('admin.restaurantCategory.RestaurantCategories',['categories' => $categories]);
     }
 
 
@@ -30,7 +30,7 @@ class RestaurantCategoriesController extends Controller
         RestaurantCategories::insert([
             'name' => $request->input('name')
         ]);
-        return $this->index();
+        return redirect()->route('RestaurantCategories.index');
     }
 
 
@@ -42,7 +42,7 @@ class RestaurantCategoriesController extends Controller
      */
     public function edit($id)
     {
-        return view('editRestaurantCategory', ['id' => $id, 'name' => RestaurantCategories::find($id)->name]);
+        return view('admin.restaurantCategory.editRestaurantCategory', ['id' => $id, 'name' => RestaurantCategories::find($id)->name]);
     }
 
     /**
@@ -57,7 +57,7 @@ class RestaurantCategoriesController extends Controller
         $category = RestaurantCategories::find($id);
         $category->name = $request->input('editedName');
         $category->save();
-        return $this->index();
+        return redirect()->route('RestaurantCategories.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class RestaurantCategoriesController extends Controller
     public function destroy($id)
     {
         RestaurantCategories::destroy($id);
-        return $this->index();
+        return redirect()->route('RestaurantCategories.index');
     }
 
     public function sendDeleteParam($id){

@@ -9,7 +9,6 @@
         <!-- - -->
         <ul class="menu-sidebar p-t-95 p-b-70">
 
-
             @if(auth()->user()->role == 'admin')
                 <li class="t-center m-b-13">
                     <a href="{{ route('RestaurantCategories.index') }}" class="txt19">Restaurants categories</a>
@@ -27,10 +26,6 @@
                     <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
                 </li>
 
-                <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage banners</a>
-                </li>
-
             @endif
 
             <li class="t-center m-b-33">
@@ -40,6 +35,17 @@
                     <button type="submit" class="txt19">Logout</button>
                 </form>
             </li>
+
+
+            @if(auth()->user()->role == 'customer')
+
+                <li class="t-center">
+                    <!-- Button3 -->
+                    <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+                        Reservation
+                    </a>
+                </li>
+            @endif
         </ul>
     </aside>
 @endsection
@@ -47,11 +53,11 @@
 @section('content')
     <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url({{ asset('rCategories/img/background.jpg') }});">
         <h2 class="txt1 t-center">
-            Food Categories
+            Restaurant Categories
         </h2>
     </section>
 
-    <form class="wrap-form-booking p-t-40 p-b-20" method="post" action="{{ route('FoodCategories.store') }}">
+    <form class="wrap-form-booking p-t-40 p-b-20" method="post" action="{{ route('RestaurantCategories.store') }}">
         @csrf
 
         <div class="row">
@@ -78,33 +84,36 @@
     </form>
 
 
-    <table class="table ">
-        <thead>
-        <tr>
-            <th scope="col">Category name</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($categories as $category)
-            <form method="get">
-                @csrf
-
+        <table class="table ">
+            <thead>
                 <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="submit" class="btn btn-secondary" formaction="{{ route( 'FoodCategories.edit', $category->id) }}">Edit</button>
-                            <button type="submit" class="btn btn-secondary" formaction="{{ route('FoodCategories.sendDeleteParam', $category->id) }}">Delete</button>
-                        </div>
-                    </td>
+                    <th scope="col">Category name</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            </form>
+            </thead>
+            <tbody>
+                @foreach($categories as $category)
+                    <form method="get">
+                        @csrf
 
-        @endforeach
-        </tbody>
-    </table>
+                        <tr>
+                            <td>{{ $category->name }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="submit" class="btn btn-secondary" formaction="{{ route( 'RestaurantCategories.edit', $category->id) }}">Edit</button>
+                                    <button type="submit" class="btn btn-secondary" formaction="{{ route('RestaurantCategories.sendDeleteParam', $category->id) }}">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </form>
 
+                @endforeach
+            </tbody>
+        </table>
+
+    <div class="mt-3">
+        {{ $categories->links() }}
+    </div>
 
 
 @endsection

@@ -27,7 +27,7 @@ class CommentController extends Controller
 
         $foods = auth()->user()->restaurant->foods;
 
-        return view('comments', ['comments' => $comments, 'foods' => $foods]);
+        return view('seller.report&comment.comments', ['comments' => $comments, 'foods' => $foods]);
     }
 
     public function delete(Request $request)

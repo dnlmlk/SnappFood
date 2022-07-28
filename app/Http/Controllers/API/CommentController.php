@@ -32,7 +32,7 @@ class CommentController extends Controller
 
         if (!is_null($request->food_id)){
             $comments = Comment::where(['food_id' => $request->food_id, 'user_id' => auth()->user()->id])->orderByDesc('created_at')->get();
-            return CommentResource::collection($comments);
+            return response(['Comments' => CommentResource::collection($comments)]);
         }
 
         if (!is_null($request->restaurant_id)){
@@ -44,7 +44,7 @@ class CommentController extends Controller
                 }
             }
             ksort($comments);
-            return CommentResource::collection(array_values($comments));
+            return response(['Comments' => CommentResource::collection(array_values($comments))]);
         }
 
     }

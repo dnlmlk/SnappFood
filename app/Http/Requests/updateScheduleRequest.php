@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class updateScheduleRequest extends FormRequest
 {
@@ -24,20 +25,20 @@ class updateScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            'saturday1' => 'nullable|integer|min:0|max:24',
-            'saturday2' => $this->saturday1 == null ? 'nullable' : 'required' . "|integer|min:" . $this->saturday1+1 . "|max:24",
-            'sunday1' => 'nullable|integer|min:0|max:24',
-            'sunday2' => $this->sunday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->sunday1+1 . '|max:24',
-            'monday1' => 'nullable|integer|min:0|max:24',
-            'monday2' => $this->monday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->monday1+1 . '|max:24',
-            'tuesday1' => 'nullable|integer|min:0|max:24',
-            'tuesday2' => $this->tuesday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->tuesday1+1 . '|max:24',
-            'wednesday1' => 'nullable|integer|min:0|max:24',
-            'wednesday2' => $this->wednesday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->wednesday1+1 . '|max:24',
-            'thursday1' => 'nullable|integer|min:0|max:24',
-            'thursday2' => $this->thursday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->thursday1+1 . '|max:24',
-            'friday1' => 'nullable|integer|min:0|max:24',
-            'friday2' => $this->friday1 == null ? 'nullable' : 'required' . '|integer|min:' . $this->friday1+1 . '|max:24',
+            'saturday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->saturday2))],
+            'saturday2' => ['nullable', 'date_format:H:i', 'after:saturday1', Rule::requiredIf(!is_null($this->saturday1))],
+            'sunday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->sunday2))],
+            'sunday2' => ['nullable', 'date_format:H:i', 'after:sunday1', Rule::requiredIf(!is_null($this->sunday1))],
+            'monday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->monday2))],
+            'monday2' => ['nullable', 'date_format:H:i', 'after:monday1', Rule::requiredIf(!is_null($this->monday1))],
+            'tuesday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->tueday2))],
+            'tuesday2' => ['nullable', 'date_format:H:i', 'after:tuesday1', Rule::requiredIf(!is_null($this->tuesday1))],
+            'wednesday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->wednesday2))],
+            'wednesday2' => ['nullable', 'date_format:H:i', 'after:wednesday1', Rule::requiredIf(!is_null($this->wednesday1))],
+            'thursday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->thursday2))],
+            'thursday2' => ['nullable', 'date_format:H:i', 'after:thursday1', Rule::requiredIf(!is_null($this->thursday1))],
+            'friday1' => ['nullable', 'date_format:H:i', Rule::requiredIf(!is_null($this->friday2))],
+            'friday2' => ['nullable', 'date_format:H:i', 'after:friday1', Rule::requiredIf(!is_null($this->friday1))],
         ];
     }
 }

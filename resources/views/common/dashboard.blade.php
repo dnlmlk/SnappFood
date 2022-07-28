@@ -27,9 +27,6 @@
                     <a href="{{ route('comments.admin') }}" class="txt19">Manage comments</a>
                 </li>
 
-                <li class="t-center m-b-13">
-                    <a href="#" class="txt19">Manage banners</a>
-                </li>
 
             @elseif(auth()->user()->role == 'seller')
                 @php($restaurant = \App\Models\Restaurant::where('user_id', auth()->user()->id)->first())

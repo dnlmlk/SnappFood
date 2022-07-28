@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
 
 Route::resource('RestaurantCategories', \App\Http\Controllers\RestaurantCategoriesController::class)->middleware(['admin', 'auth']);
 Route::get('/sendDelete/{id}', [\App\Http\Controllers\RestaurantCategoriesController::class, 'sendDeleteParam'])->whereNumber('id')->name('RestaurantCategories.sendDeleteParam')->middleware(['admin', 'auth']);
@@ -53,6 +50,15 @@ Route::post('Report/Download', [\App\Http\Controllers\ReportController::class, '
 Route::post('Report/Download/Orders', [\App\Http\Controllers\ReportController::class, 'orderExport'])->middleware(['auth', 'seller'])->name('report.orders.download');
 
 
+
+
+Route::get('/', function () {
+    return view('common.main');
+});
+
+
+
+
 Route::get('/dashboardd', function () {
 
     if (auth()->user()->role == 'seller') {
@@ -64,7 +70,7 @@ Route::get('/dashboardd', function () {
         if (\Illuminate\Support\Facades\Gate::allows('view', $schedule) == false) return redirect()->route('Schedule.index');
     }
 
-    return view('dashboard');
+    return view('common.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

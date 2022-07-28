@@ -18,14 +18,13 @@ class CardResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'Id' => $this->id,
+            'Card ID' => $this->id,
             'Status' => $this->customer_status,
             'Restaurant' => [
                 'Title' => Restaurant::find($this->restaurant_id)->name,
+                'Category' => Restaurant::find($this->restaurant_id)->restaurantCategory->name
             ],
-            'Foods' => [
-                FoodForCardResource::collection($this->foods),
-            ],
+            'Foods' => FoodForCardResource::collection($this->foods),
         ];
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\Types\Integer;
 use function PHPUnit\Framework\isNull;
 
 class OrderController extends Controller
@@ -113,17 +114,17 @@ class OrderController extends Controller
 
         if ($gate->allowed()) {
 
-            $foods = $order->foods->first()->pivot->pluck('food_id')->toArray();
+            $foods = $order->foods->pluck('id')->toArray();
             if (!in_array($request->food_id, $foods)) return response(['Message' => "this food isn't added yet"]);
 
-            $pivot = $order->foods->first()->pivot->where('food_id', $request->food_id)->first();
-
-
+            $pivot = $order->foods->where('id', $request->food_id)->first()->pivot;
             $order->total_price -= (Food::find($request->food_id)->final_price * $pivot->count);
+
 
             $pivot->delete();
 
-            $order->save();
+            if (intval($order->total_price) == 0) $order->delete();
+            else $order->save();
 
             return response(['Message' => 'food is deleted']);
         }
@@ -136,6 +137,7 @@ class OrderController extends Controller
     public function payCard($id)
     {
         $order = Order::find($id);
+        if($order == null ) return \response(['Message' => "this isn't your cart"]);
 
         $gate = Gate::inspect('pay', $order);
 

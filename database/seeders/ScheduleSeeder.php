@@ -17,7 +17,7 @@ class ScheduleSeeder extends Seeder
     {
         DB::table('schedules')->insert([
             'restaurant_id' => 1,
-            'saturday' => '6,7',
+            'saturday' => '10:00,23:00',
             'sunday' => null,
             'monday' => null,
             'tuesday' => null,

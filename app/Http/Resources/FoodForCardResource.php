@@ -21,7 +21,6 @@ class FoodForCardResource extends JsonResource
                 'Title' => $this->name,
                 'Price' => $this->final_price,
                 'Count' => $this->getOriginal()['pivot_count']
-//                'Count' => $this->orders()->pivot->count,
             ];
     }
 }
