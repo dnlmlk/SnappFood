@@ -22,13 +22,13 @@ seller and super admin is SSG but customer part is Restful API
 - Laravel-Excel
 ## Installation
 > **Note:** First of all create **snappfood** database
-``bash
+```bash
 composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan serve
-``
+```
 ## Roles
 ### Super Admin
 ### Login
