@@ -10,3 +10,33 @@
 <p align="center">
 <img src="https://www.seyedrezabazyar.com/fa/files/2018/03/snappfood.png" width="150">
 </p>
+
+# Snapp Food
+## About
+This is a sample of snapp food that has three parts of super admin,seller and customer. 
+seller and super admin is SSG but customer part is Restful API
+## Used packages
+- Breeze (seller and super admin authentication)
+- Sanctum (customer authentication)
+- Laravel-Chart
+- Laravel-Excel
+## Installation
+> **Note:** First of all create **snappfood** database
+``bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+``
+## Roles
+### Super Admin
+### Login
+You can sign in as a super admin with these information:
+- Email: admin@gmail.com
+- Password: 12345678
+### Features
+- Restauarnt categories (CRUD)
+- Food categories (CRUD)
+- Discounts (CRUD)
+- Manage comments that sellers request to delete them
