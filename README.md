@@ -31,12 +31,32 @@ php artisan serve
 ```
 ## Roles
 ### Super Admin
-### Login
+#### Login
 You can sign in as a super admin with these information:
 - Email: admin@gmail.com
 - Password: 12345678
-### Features
+#### Features
 - Restauarnt categories (CRUD)
 - Food categories (CRUD)
 - Discounts (CRUD)
 - Manage comments that sellers request to delete them
+### Seller
+#### Sample Login
+- Email: seller@gmail.com
+- Password: 12345678
+#### Features
+- Food menu (CRUD)
+- Set schedule time
+- Edit restaurant general information settings
+- See foods comments and reply to them
+- Analyze financial reports and charts of restaurant
+- Analyze Orders history of restaurant
+### Customer
+#### Sample Login
+- Email: customer@gmail.com
+- Password: 12345678
+#### Features
+- Add and update address and set address as activate address
+- See food menu and general information of near restaurants
+- Card (CRUD) + Pay card
+- Post comments and read them
